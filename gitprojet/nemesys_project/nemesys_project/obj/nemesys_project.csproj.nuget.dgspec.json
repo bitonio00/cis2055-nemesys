@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\benoi\\Documents\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj": {}
+    "C:\\Users\\benoi\\Documents\\GIT_nem\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\benoi\\Documents\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj": {
+    "C:\\Users\\benoi\\Documents\\GIT_nem\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\benoi\\Documents\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj",
+        "projectUniqueName": "C:\\Users\\benoi\\Documents\\GIT_nem\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj",
         "projectName": "nemesys_project",
-        "projectPath": "C:\\Users\\benoi\\Documents\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj",
+        "projectPath": "C:\\Users\\benoi\\Documents\\GIT_nem\\gitprojet\\nemesys_project\\nemesys_project\\nemesys_project.csproj",
         "packagesPath": "C:\\Users\\benoi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\benoi\\Documents\\gitprojet\\nemesys_project\\nemesys_project\\obj\\",
+        "outputPath": "C:\\Users\\benoi\\Documents\\GIT_nem\\gitprojet\\nemesys_project\\nemesys_project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\benoi\\AppData\\Roaming\\NuGet\\NuGet.Config",
