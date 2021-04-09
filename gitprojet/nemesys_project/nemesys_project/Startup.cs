@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using nemesys_project.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace nemesys_project
 {
@@ -24,6 +26,10 @@ namespace nemesys_project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            var connection =
+                @"Data Source=LAPTOP-5E9IAOCC\MSSQLSERVER01;Initial Catalog=nemesysDb;Integrated Security=True;Pooling=False";
+            services.AddDbContext<NemesysDbContext>(options => options.UseSqlServer(connection));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
