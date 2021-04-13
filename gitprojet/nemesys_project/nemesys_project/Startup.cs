@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using nemesys_project.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace nemesys_project
 {
@@ -31,6 +32,7 @@ namespace nemesys_project
             services.AddDbContext<NemesysDbContext>(options => options.UseSqlServer(connection));
 
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

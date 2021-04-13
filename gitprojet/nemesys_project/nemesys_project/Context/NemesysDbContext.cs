@@ -9,8 +9,11 @@ namespace nemesys_project.Context
 {
     public class NemesysDbContext : DbContext
     {
-        
-            public NemesysDbContext(DbContextOptions<NemesysDbContext> options)
+        public NemesysDbContext() 
+        {
+        }
+
+        public NemesysDbContext(DbContextOptions<NemesysDbContext> options)
                     : base(options)
             {
 
@@ -22,4 +25,5 @@ namespace nemesys_project.Context
 
 
     }
+
 }

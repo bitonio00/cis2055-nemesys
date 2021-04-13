@@ -50,6 +50,23 @@ namespace nemesys_project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("InvestigatorId");
 
                     b.ToTable("Investigators");
@@ -83,11 +100,11 @@ namespace nemesys_project.Migrations
                     b.Property<string>("ReporterInfo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusRefId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<int>("UpVote")
                         .HasColumnType("int");
@@ -95,6 +112,8 @@ namespace nemesys_project.Migrations
                     b.HasKey("ReportId");
 
                     b.HasIndex("ReporterId");
+
+                    b.HasIndex("StatusRefId");
 
                     b.ToTable("Reports");
                 });
@@ -106,9 +125,41 @@ namespace nemesys_project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ReporterId");
 
                     b.ToTable("Reporters");
+                });
+
+            modelBuilder.Entity("nemesys_project.Models.Status", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("StatusOfReport")
+                        .HasColumnType("int");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Status");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.Investigation", b =>
@@ -134,7 +185,15 @@ namespace nemesys_project.Migrations
                         .WithMany("Reports")
                         .HasForeignKey("ReporterId");
 
+                    b.HasOne("nemesys_project.Models.Status", "Status")
+                        .WithMany("Reports")
+                        .HasForeignKey("StatusRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Reporter");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.Investigator", b =>
@@ -148,6 +207,11 @@ namespace nemesys_project.Migrations
                 });
 
             modelBuilder.Entity("nemesys_project.Models.Reporter", b =>
+                {
+                    b.Navigation("Reports");
+                });
+
+            modelBuilder.Entity("nemesys_project.Models.Status", b =>
                 {
                     b.Navigation("Reports");
                 });
