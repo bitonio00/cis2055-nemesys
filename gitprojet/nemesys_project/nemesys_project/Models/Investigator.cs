@@ -29,6 +29,6 @@ namespace nemesys_project.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public ICollection<Investigation> Investigations { get; set; }
-        //lll
+        
     }
 }

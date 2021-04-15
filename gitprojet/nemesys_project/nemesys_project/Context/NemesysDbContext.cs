@@ -18,6 +18,7 @@ namespace nemesys_project.Context
         public DbSet<Investigator> Investigators { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Reporter> Reporters { get; set; }
+        public DbSet<nemesys_project.Models.Status> Status { get; set; }
 
 
     }

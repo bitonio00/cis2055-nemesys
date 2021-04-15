@@ -1,23 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace nemesys_project.Models
+namespace nemesys_project.ViewModel
 {
-    public class Reporter
+    public class RegisterViewModel
     {
-        public int ReporterId { get; set; }
+        [Required]
+        [Display(Name = "Reporter or Investigator")]
+        public bool Type { get; set; }
 
+        [Required(ErrorMessage ="Name is Required")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = "Last Name is Required")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-       
+
         [Display(Name = "Phone Number")]
 
         public string PhoneNumber { get; set; }
@@ -32,15 +34,10 @@ namespace nemesys_project.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public ICollection<Report> Reports { get; set; }
-
-        public Reporter(string firstName, string lastName,string phoneNumber, string email, string password)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            Email = email;
-            Password = password;
-        }
+        [DataType(DataType.Password)]
+        [Display(Name ="Confirm password")]
+        [Compare("Password",
+            ErrorMessage ="Password and confirmation password do not match")]
+        public string ConfirmPassword { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using nemesys_project.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using nemesys_project.Models;
 
 namespace nemesys_project
 {
@@ -29,6 +30,7 @@ namespace nemesys_project
         {
             services.AddDbContextPool<NemesysDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NemesysDbConnection")));
             services.AddControllersWithViews();
+            services.AddScoped<IReporterRepository, SQLReporterRepository>();
             
             
 
