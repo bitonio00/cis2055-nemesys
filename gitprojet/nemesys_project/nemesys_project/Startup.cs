@@ -14,22 +14,23 @@ using Microsoft.Extensions.Options;
 
 namespace nemesys_project
 {
+    
     public class Startup
     {
+        private IConfiguration Configuration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<NemesysDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NemesysDbConnection")));
             services.AddControllersWithViews();
-            var connection =
-                @"Data Source=LAPTOP-5E9IAOCC\MSSQLSERVER01;Initial Catalog=nemesysDb;Integrated Security=True;Pooling=False";
-            services.AddDbContext<NemesysDbContext>(options => options.UseSqlServer(connection));
+            
+            
 
         }
         

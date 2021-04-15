@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,8 +17,9 @@ namespace nemesys_project.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
+       
         [Display(Name = "Phone Number")]
+
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Email is Required")]

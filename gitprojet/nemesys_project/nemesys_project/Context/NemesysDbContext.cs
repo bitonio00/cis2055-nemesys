@@ -9,10 +9,6 @@ namespace nemesys_project.Context
 {
     public class NemesysDbContext : DbContext
     {
-        public NemesysDbContext() 
-        {
-        }
-
         public NemesysDbContext(DbContextOptions<NemesysDbContext> options)
                     : base(options)
             {

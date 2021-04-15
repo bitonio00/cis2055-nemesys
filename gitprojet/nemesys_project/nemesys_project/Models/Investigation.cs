@@ -10,7 +10,6 @@ namespace nemesys_project.Models
     {
         [ForeignKey("Report")]
         public int InvestigationId { get; set; }
-
         public string Description { get; set; }
         public DateTime DateOfAction { get; set; }
         public bool Status { get; set; } 
