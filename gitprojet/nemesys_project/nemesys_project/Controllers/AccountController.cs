@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using nemesys_project.Models;
 using nemesys_project.ViewModel;
@@ -11,39 +12,81 @@ namespace nemesys_project.Controllers
 {
     public class AccountController : Controller
     {
-        private IReporterRepository _reporterRepository;
-        public AccountController(IReporterRepository reporterRepository)
+        private readonly UserManager<NemesysUser> userManager;
+        private readonly SignInManager<NemesysUser> signInManager;
+
+        public AccountController(UserManager<NemesysUser>userManager,
+            SignInManager<NemesysUser>signInManager )
         {
-            _reporterRepository = reporterRepository;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
         
         public IActionResult Index()
         {
-            return View(_reporterRepository.GetAllReporters());
+            return View();
+        }
+       
+        public async Task<IActionResult> LogOut()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult Register()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Register(RegisterViewModel usr)
+        public async Task<IActionResult> Register(RegisterViewModel usr)
         {
 
             if (ModelState.IsValid)
             {
-                /* if(usr.Type==false)
-                 {*/
+                var user = new NemesysUser { 
+                    UserName = usr.Email,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName };
 
-                /* _reporterRepository.Add(new Reporter {
-                     FirstName=usr.FirstName,
-                     LastName=usr.LastName,
-                     PhoneNumber=usr.PhoneNumber,
-                     Email=usr.Email,
-                     Password=usr.Password });*/
-                _reporterRepository.Add(new Reporter(usr.FirstName, usr.LastName, usr.PhoneNumber, usr.Email, usr.Password));
-              //  }
+               var result= await userManager.CreateAsync(user, usr.Password);
+                if(result.Succeeded)
+                {
+                   await signInManager.SignInAsync(user, isPersistent: false);
+                   return RedirectToAction("Index","Home");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
 
-                return RedirectToAction("Index");
+                
+            }
+            else
+            {
+                ModelState.AddModelError("", "Some Error Occured!");
+            }
+            return View(usr);
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel usr)
+        {
+            
+
+            if (ModelState.IsValid)
+            {
+
+                var result = await signInManager.PasswordSignInAsync(usr.Email,usr.Password,usr.RemeberMe,false );
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError("","Invalid Login" );
             }
             else
             {

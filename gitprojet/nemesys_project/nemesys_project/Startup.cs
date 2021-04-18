@@ -12,6 +12,7 @@ using nemesys_project.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using nemesys_project.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace nemesys_project
 {
@@ -29,6 +30,10 @@ namespace nemesys_project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<NemesysDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NemesysDbConnection")));
+            services.AddIdentity<NemesysUser, IdentityRole>(options =>
+            {
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<NemesysDbContext>();
             services.AddControllersWithViews();
             services.AddScoped<IReporterRepository, SQLReporterRepository>();
             
@@ -54,7 +59,7 @@ namespace nemesys_project
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
