@@ -17,6 +17,8 @@ namespace nemesys_project.Models
 
         [Display(Name = "Upvote")]
         public int Upvote { get; set; }
+        public ICollection<Investigation> Investigations { get; set; }
+        public ICollection<Report> Reports { get; set; }
 
     }
 }

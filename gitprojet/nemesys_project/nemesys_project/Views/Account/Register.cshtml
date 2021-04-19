@@ -41,10 +41,23 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Type" /> @Html.DisplayNameFor(model => model.Type)
-                </label>
+            <div class="form-group">
+                <div class=" radio">
+                    <label asp-for=" IsInvestigator">
+                        <input asp-for="IsInvestigator" />
+                        @Html.DisplayFor(m => m.IsInvestigator)
+                        Are you a Investigator ?
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class=" checkbox">
+                    <label asp-for=" IsReporter">
+                        <input asp-for="IsReporter" />
+                        @Html.DisplayFor(m => m.IsReporter)
+                        Are you a Reporter ?
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

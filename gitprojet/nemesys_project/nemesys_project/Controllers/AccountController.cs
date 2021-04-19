@@ -14,12 +14,14 @@ namespace nemesys_project.Controllers
     {
         private readonly UserManager<NemesysUser> userManager;
         private readonly SignInManager<NemesysUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public AccountController(UserManager<NemesysUser>userManager,
-            SignInManager<NemesysUser>signInManager )
+            SignInManager<NemesysUser>signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
         
         public IActionResult Index()
@@ -39,27 +41,38 @@ namespace nemesys_project.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel usr)
         {
+           // IdentityResult result2 = null;
 
             if (ModelState.IsValid)
             {
+                string roleName="";
                 var user = new NemesysUser { 
                     UserName = usr.Email,
                     Email = usr.Email,
                     PhoneNumber = usr.PhoneNumber,
                     FirstName = usr.FirstName,
                     LastName = usr.LastName };
-
-               var result= await userManager.CreateAsync(user, usr.Password);
+                if(usr.IsReporter == true && usr.IsInvestigator==false)
+                {
+                    roleName = "reporter";
+                }
+                else if (usr.IsReporter == false && usr.IsInvestigator == true)
+                {
+                    roleName = "investigator";
+                }
+                var result= await userManager.CreateAsync(user, usr.Password);
                 if(result.Succeeded)
                 {
                    await signInManager.SignInAsync(user, isPersistent: false);
-                   return RedirectToAction("Index","Home");
+                   var role = await roleManager.FindByNameAsync(roleName);
+                   var reporterUser = await userManager.FindByEmailAsync(usr.Email);
+                   IdentityResult result2 = await userManager.AddToRoleAsync(reporterUser, role.Name);
+                    return RedirectToAction("Index","Home");
                 }
                 foreach(var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
                 
             }
             else

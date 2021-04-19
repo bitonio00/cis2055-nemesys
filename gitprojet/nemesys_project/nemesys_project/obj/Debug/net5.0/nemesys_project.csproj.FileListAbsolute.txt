@@ -154,3 +154,5 @@ C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\bin\D
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\AddRole.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\ListRoles.cshtml.g.cs

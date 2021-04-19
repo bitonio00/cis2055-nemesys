@@ -39,5 +39,13 @@ namespace nemesys_project.ViewModel
         [Compare("Password",
             ErrorMessage ="Password and confirmation password do not match")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name ="Are you a Investigator?")]
+        public bool IsInvestigator { get; set; }
+
+        [Display(Name = "Are you a Reporter?")]
+        public bool IsReporter { get; set; }
+
+
     }
 }
