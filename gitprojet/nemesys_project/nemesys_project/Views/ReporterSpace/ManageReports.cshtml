@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewData["Title"] = "ManageReports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ManageReports</h1>
+
+<div class="form-group">
+    <input type="button" value="Add Report" onclick="@("window.location.href='"+@Url.Action("AddReport","ReporterSpace")+"'");" />
+</div>

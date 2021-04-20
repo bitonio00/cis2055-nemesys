@@ -25,12 +25,13 @@ namespace nemesys_project.Controllers
         }
         
         public IActionResult Index()
-        {
+        {   
             return View();
         }
        
         public async Task<IActionResult> LogOut()
         {
+
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }

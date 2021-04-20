@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using nemesys_project.Context;
 
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    partial class NemesysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210420122957_update_report")]
+    partial class update_report
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

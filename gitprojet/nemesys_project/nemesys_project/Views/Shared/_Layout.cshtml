@@ -20,7 +20,6 @@
                 <div class="navbar-collapse">
                     <ul class="nav">
                         <li>@Html.ActionLink(" " + "Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink(" " + "About", "About", "Home")</li>
                         <li>@Html.ActionLink(" " + "Hall Of Fame", "Index", "HallOfFame")</li>
                         @if (signInManager.IsSignedIn(User))
                         {
@@ -32,6 +31,15 @@
                             <li>@Html.ActionLink("Login", "Login", "Account")</li>
 
                         }
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("reporter"))
+                         {
+                            <li>@Html.ActionLink(" " + "My Space", "ManageReports", "ReporterSpace")</li>
+                        }
+                        else if(signInManager.IsSignedIn(User) && User.IsInRole("investigator"))
+                        {
+                           <li>@Html.ActionLink(" " + "My Space", "ManageInvestigations", "InvestigatorSpace")</li>
+                        }
+
                     </ul>
                 </div>
             </div>
