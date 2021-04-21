@@ -35,9 +35,10 @@ namespace nemesys_project
                 options.Password.RequireUppercase = false;
             }).AddEntityFrameworkStores<NemesysDbContext>();
             services.AddControllersWithViews();
-            services.AddScoped<IReporterRepository, SQLReporterRepository>();
-            
-            
+            services.AddScoped<IReportRepository, SQLReportRepository>();
+            services.AddScoped<IStatusRepository, SQLStatusRepository>();
+
+
 
         }
         

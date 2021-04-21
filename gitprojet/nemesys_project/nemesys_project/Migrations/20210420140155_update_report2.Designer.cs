@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using nemesys_project.Context;
 
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    partial class NemesysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210420140155_update_report2")]
+    partial class update_report2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -313,6 +315,9 @@ namespace nemesys_project.Migrations
                     b.Property<string>("NemesysUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("ReporterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReporterInfo")
                         .HasColumnType("nvarchar(max)");
 
@@ -325,6 +330,8 @@ namespace nemesys_project.Migrations
                     b.HasKey("ReportId");
 
                     b.HasIndex("NemesysUserId");
+
+                    b.HasIndex("ReporterId");
 
                     b.HasIndex("StatusRefId");
 
@@ -367,29 +374,12 @@ namespace nemesys_project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("StatusOfReport")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StatusOfReport")
+                        .HasColumnType("int");
 
                     b.HasKey("StatusId");
 
                     b.ToTable("Status");
-
-                    b.HasData(
-                        new
-                        {
-                            StatusId = 1,
-                            StatusOfReport = "closed"
-                        },
-                        new
-                        {
-                            StatusId = 2,
-                            StatusOfReport = "being investigated"
-                        },
-                        new
-                        {
-                            StatusId = 3,
-                            StatusOfReport = "no action required"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -470,6 +460,10 @@ namespace nemesys_project.Migrations
                         .WithMany("Reports")
                         .HasForeignKey("NemesysUserId");
 
+                    b.HasOne("nemesys_project.Models.Reporter", null)
+                        .WithMany("Reports")
+                        .HasForeignKey("ReporterId");
+
                     b.HasOne("nemesys_project.Models.Status", "Status")
                         .WithMany("Reports")
                         .HasForeignKey("StatusRefId")
@@ -494,6 +488,11 @@ namespace nemesys_project.Migrations
             modelBuilder.Entity("nemesys_project.Models.Report", b =>
                 {
                     b.Navigation("Investigation");
+                });
+
+            modelBuilder.Entity("nemesys_project.Models.Reporter", b =>
+                {
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.Status", b =>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using nemesys_project.Models;
+using nemesys_project.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,11 @@ namespace nemesys_project.Controllers
     public class ReporterSpaceController : Controller
     {
         private readonly UserManager<NemesysUser> userManager;
-        public ReporterSpaceController(UserManager<NemesysUser> userManager)
+        private readonly IReportRepository reportRepository;
+        public ReporterSpaceController(UserManager<NemesysUser> userManager, IReportRepository reportRepository)
         {
             this.userManager = userManager;
+            this.reportRepository = reportRepository;
         }
 
         // GET: ReporterSpaceController
@@ -40,8 +43,29 @@ namespace nemesys_project.Controllers
         {
             return View();
         }
-        public IActionResult AddReport()
+        public IActionResult AddReport(ReportViewModel reportModel)
         {
+            if(ModelState.IsValid)
+            {
+                var report = new Report
+                {
+                    CreationDate = DateTime.Now,
+                    HazardDate = reportModel.HazardDate,
+                    HazardLocation = reportModel.HazardLocation,
+                    HazardType = reportModel.HazardType,
+                    Description = User.Identity.Name,
+                    UpVote = 0,
+                    Status = null,
+                    Investigation = null,
+                    LatitudeLocation = 0,
+                    LongitudeLocation = 0,
+                    ReporterInfo="",
+                    StatusRefId=0,
+
+                };
+                reportRepository.Add(report);
+            }
+            
             return View();
         }
 

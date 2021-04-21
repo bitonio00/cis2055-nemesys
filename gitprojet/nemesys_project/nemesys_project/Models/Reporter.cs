@@ -32,7 +32,7 @@ namespace nemesys_project.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public ICollection<Report> Reports { get; set; }
+      
 
         public Reporter(string firstName, string lastName,string phoneNumber, string email, string password)
         {

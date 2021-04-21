@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using nemesys_project.Context;
 
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    partial class NemesysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210420210914_update_status")]
+    partial class update_status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -373,23 +375,6 @@ namespace nemesys_project.Migrations
                     b.HasKey("StatusId");
 
                     b.ToTable("Status");
-
-                    b.HasData(
-                        new
-                        {
-                            StatusId = 1,
-                            StatusOfReport = "closed"
-                        },
-                        new
-                        {
-                            StatusId = 2,
-                            StatusOfReport = "being investigated"
-                        },
-                        new
-                        {
-                            StatusId = 3,
-                            StatusOfReport = "no action required"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

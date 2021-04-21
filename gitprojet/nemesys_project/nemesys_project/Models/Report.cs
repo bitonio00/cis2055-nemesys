@@ -21,8 +21,6 @@ namespace nemesys_project.Models
         public double LatitudeLocation { get; set; }
         public int UpVote { get; set; }
         public string ReporterInfo { get; set; }
-        public int? ReporterId { get; set; }
-        public Reporter Reporter { get; set; }
 
         [ForeignKey("Status")]
         public int StatusRefId { get; set; }
