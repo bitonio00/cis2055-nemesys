@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using nemesys_project.Models;
 using Microsoft.AspNetCore.Identity;
+using nemesys_project.Models.SQLRepository;
+using nemesys_project.Models.Interfaces;
 
 namespace nemesys_project
 {
@@ -37,6 +39,8 @@ namespace nemesys_project
             services.AddControllersWithViews();
             services.AddScoped<IReportRepository, SQLReportRepository>();
             services.AddScoped<IStatusRepository, SQLStatusRepository>();
+            services.AddScoped<INemesysUserRepository, SQLNemesysUserRepository>();
+            services.AddScoped<IInvestigationRepository, SQLInvestigationRepository>();
 
 
 

@@ -156,6 +156,10 @@ C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\bin\D
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\AddRole.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\ListRoles.cshtml.g.cs
-C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\ReporterSpace\ManageReports.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\InvestigatorSpace\ManageInvestigations.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\ReporterSpace\AddReport.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\ReporterSpace\ManageReports.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\ReporterSpace\EditReport.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\InvestigatorSpace\ChooseReport.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\InvestigatorSpace\CreateInvestigation.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\InvestigatorSpace\EditInvestigation.cshtml.g.cs

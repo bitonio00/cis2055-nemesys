@@ -20,11 +20,14 @@ namespace nemesys_project.Models
         public double LongitudeLocation { get; set; }
         public double LatitudeLocation { get; set; }
         public int UpVote { get; set; }
-        public string ReporterInfo { get; set; }
 
         [ForeignKey("Status")]
         public int StatusRefId { get; set; }
         public Status Status { get; set; }
+
+        [ForeignKey("Reporter")]
+        public string? ReporterRefId { get; set; }
+        public NemesysUser Reporter { get; set; }
 
         public virtual Investigation Investigation { get; set; }
 

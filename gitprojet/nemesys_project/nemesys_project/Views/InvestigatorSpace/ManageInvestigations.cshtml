@@ -1,8 +1,59 @@
-﻿
+﻿@model IEnumerable<Investigation>
+
 @{
     ViewData["Title"] = "ManageInvestigations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>ManageInvestigations</h1>
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="ChooseReport"
+       asp-controller="InvestigatorSpace">Add New Investigation</a>
 
+    foreach (var investigation in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Date of Investigation @investigation.DateOfCreation
+            </div>
+            <div class="card-body">
+                Hazard Place : @investigation.Report.HazardLocation <br />
+                Description of Hazard : @investigation.Report.Description <br />
+                Date of the Hazard : @investigation.Report.HazardDate <br />
+                Description of Investigation : @investigation.Description <br />
+                Date of Action : @investigation.DateOfAction <br />
+                Status of Report : @investigation.Report.Status.StatusOfReport <br />
+                email of the Reporter : @investigation.Report.Reporter.Email <br />
+                mobile of the Reporter: @investigation.Report.Reporter.PhoneNumber <br />
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary"
+                   asp-action="EditInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@investigation.InvestigationId" >
+                    Edit
+                </a>
+                <a class="btn btn-danger"
+                   asp-action="DeleteInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@investigation.InvestigationId" >
+                    Delete
+                </a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            You have no Investigations yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button below to create a Investigation
+            </h5>
+            <a class="btn btn-primary" style="width:auto" asp-controller="InvestigatorSpace" asp-action="ChooseReport">
+                Create Investigation
+            </a>
+        </div>
+    </div>
+
+}

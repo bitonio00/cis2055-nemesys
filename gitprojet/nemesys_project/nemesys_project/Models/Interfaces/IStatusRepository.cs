@@ -13,6 +13,8 @@ namespace nemesys_project.Models
         Status Update(Status statusChanges);
         Status Delete(int id);
         void IsValid();
-        
+        int FindRefId(string statusOfReport);
+
+
     }
 }

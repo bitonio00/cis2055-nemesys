@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace nemesys_project.Migrations
 {
-    public partial class identityMig : Migration
+    public partial class new_strat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +26,9 @@ namespace nemesys_project.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Upvote = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -44,6 +47,19 @@ namespace nemesys_project.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Status",
+                columns: table => new
+                {
+                    StatusId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusOfReport = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.StatusId);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +168,89 @@ namespace nemesys_project.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HazardDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HazardType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HazardLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LongitudeLocation = table.Column<double>(type: "float", nullable: false),
+                    LatitudeLocation = table.Column<double>(type: "float", nullable: false),
+                    UpVote = table.Column<int>(type: "int", nullable: false),
+                    StatusRefId = table.Column<int>(type: "int", nullable: false),
+                    ReporterRefId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
+                    table.ForeignKey(
+                        name: "FK_Reports_AspNetUsers_ReporterRefId",
+                        column: x => x.ReporterRefId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reports_Status_StatusRefId",
+                        column: x => x.StatusRefId,
+                        principalTable: "Status",
+                        principalColumn: "StatusId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Investigations",
+                columns: table => new
+                {
+                    InvestigationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfAction = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    InvestigatorRefId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReportRefId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Investigations", x => x.InvestigationId);
+                    table.ForeignKey(
+                        name: "FK_Investigations_AspNetUsers_InvestigatorRefId",
+                        column: x => x.InvestigatorRefId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Investigations_Reports_ReportRefId",
+                        column: x => x.ReportRefId,
+                        principalTable: "Reports",
+                        principalColumn: "ReportId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "4b37a348-5a94-4613-bb7e-d65df0c21ac9", "5a137798-f51b-4126-85e4-c4be76ce6def", "reporter", "REPORTER" },
+                    { "e583647a-fd32-45e1-8883-c1899a35b852", "10d003fc-f44f-4a5d-9655-291064ade02f", "investigator", "INVESTIGATOR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Status",
+                columns: new[] { "StatusId", "StatusOfReport" },
+                values: new object[,]
+                {
+                    { 1, "no current investigation" },
+                    { 2, "closed" },
+                    { 3, "no action required" },
+                    { 4, "being investigated" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +289,27 @@ namespace nemesys_project.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investigations_InvestigatorRefId",
+                table: "Investigations",
+                column: "InvestigatorRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Investigations_ReportRefId",
+                table: "Investigations",
+                column: "ReportRefId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_ReporterRefId",
+                table: "Reports",
+                column: "ReporterRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_StatusRefId",
+                table: "Reports",
+                column: "StatusRefId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,10 +330,19 @@ namespace nemesys_project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Investigations");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Reports");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Status");
         }
     }
 }

@@ -1,0 +1,41 @@
+﻿@model InvestigationViewModel
+@{
+    ViewData["Title"] = "CreateInvestigation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateInvestigation</h1>
+
+<h4>Report</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateInvestigation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfAction" class="control-label"></label>
+                <input asp-for="DateOfAction" class="form-control" />
+                <span asp-validation-for="DateOfAction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                Select a Status
+                <select asp-for="StatusId" class="form-control" name="StatusId">
+                    <option value="2">closed</option>
+                    <option value="3">no action required</option>
+                    <option value="4">being investigated</option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="ReportId" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

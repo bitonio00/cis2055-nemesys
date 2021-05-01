@@ -50,5 +50,18 @@ namespace nemesys_project.Models
         {
             throw new NotImplementedException();
         }
+        public int FindRefId(string statusOfReport)
+        {
+            foreach(var status in DbContext.Status)
+            {
+                if(status.StatusOfReport.Equals(statusOfReport))
+                {
+                    var id = status.StatusId;
+                    return id;
+                }
+            }
+            return 1;
+        }
+            
     }
 }

@@ -5,13 +5,10 @@ using System.Threading.Tasks;
 
 namespace nemesys_project.Models
 {
-    public interface IReportRepository
+    public interface INemesysUserRepository
     {
-        Report GetReport(int Id);
+        IEnumerable<Report> GetAllUserReports(string Id);
+        IEnumerable<Investigation> GetAllUserInvestigations(string Id);
         IEnumerable<Report> GetAllReports();
-        Report Add(Report report);
-        Report Update(Report reportChanges);
-        Report Delete(int id);
-
     }
 }

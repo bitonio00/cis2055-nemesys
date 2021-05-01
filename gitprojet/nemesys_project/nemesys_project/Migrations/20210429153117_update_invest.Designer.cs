@@ -10,8 +10,8 @@ using nemesys_project.Context;
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    [Migration("20210420210914_update_status")]
-    partial class update_status
+    [Migration("20210429153117_update_invest")]
+    partial class update_invest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,22 @@ namespace nemesys_project.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9769ef22-5c86-4756-8550-0c80152fd850",
+                            ConcurrencyStamp = "ca0e6632-1b06-4ca6-9fdf-d3227f3589f6",
+                            Name = "reporter",
+                            NormalizedName = "REPORTER"
+                        },
+                        new
+                        {
+                            Id = "08ad86f4-94b1-4952-afd4-99deb4309d9f",
+                            ConcurrencyStamp = "e13e10cf-3558-4e4e-b89a-ae73e67930ae",
+                            Name = "investigator",
+                            NormalizedName = "INVESTIGATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -155,7 +171,9 @@ namespace nemesys_project.Migrations
             modelBuilder.Entity("nemesys_project.Models.Investigation", b =>
                 {
                     b.Property<int>("InvestigationId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateOfAction")
                         .HasColumnType("datetime2");
@@ -163,51 +181,23 @@ namespace nemesys_project.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InvestigatorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NemesysUserId")
+                    b.Property<string>("InvestigatorRefId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ReportRefId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("InvestigationId");
 
-                    b.HasIndex("InvestigatorId");
+                    b.HasIndex("InvestigatorRefId");
 
-                    b.HasIndex("NemesysUserId");
+                    b.HasIndex("ReportRefId")
+                        .IsUnique();
 
                     b.ToTable("Investigations");
-                });
-
-            modelBuilder.Entity("nemesys_project.Models.Investigator", b =>
-                {
-                    b.Property<int>("InvestigatorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("InvestigatorId");
-
-                    b.ToTable("Investigators");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.NemesysUser", b =>
@@ -312,11 +302,8 @@ namespace nemesys_project.Migrations
                     b.Property<double>("LongitudeLocation")
                         .HasColumnType("float");
 
-                    b.Property<string>("NemesysUserId")
+                    b.Property<string>("ReporterRefId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ReporterInfo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusRefId")
                         .HasColumnType("int");
@@ -326,40 +313,11 @@ namespace nemesys_project.Migrations
 
                     b.HasKey("ReportId");
 
-                    b.HasIndex("NemesysUserId");
+                    b.HasIndex("ReporterRefId");
 
                     b.HasIndex("StatusRefId");
 
                     b.ToTable("Reports");
-                });
-
-            modelBuilder.Entity("nemesys_project.Models.Reporter", b =>
-                {
-                    b.Property<int>("ReporterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReporterId");
-
-                    b.ToTable("Reporters");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.Status", b =>
@@ -375,6 +333,28 @@ namespace nemesys_project.Migrations
                     b.HasKey("StatusId");
 
                     b.ToTable("Status");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusId = 1,
+                            StatusOfReport = "no current investigation"
+                        },
+                        new
+                        {
+                            StatusId = 2,
+                            StatusOfReport = "closed"
+                        },
+                        new
+                        {
+                            StatusId = 3,
+                            StatusOfReport = "no action required"
+                        },
+                        new
+                        {
+                            StatusId = 4,
+                            StatusOfReport = "being investigated"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -430,19 +410,15 @@ namespace nemesys_project.Migrations
 
             modelBuilder.Entity("nemesys_project.Models.Investigation", b =>
                 {
+                    b.HasOne("nemesys_project.Models.NemesysUser", "Investigator")
+                        .WithMany("Investigations")
+                        .HasForeignKey("InvestigatorRefId");
+
                     b.HasOne("nemesys_project.Models.Report", "Report")
                         .WithOne("Investigation")
-                        .HasForeignKey("nemesys_project.Models.Investigation", "InvestigationId")
+                        .HasForeignKey("nemesys_project.Models.Investigation", "ReportRefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("nemesys_project.Models.Investigator", "Investigator")
-                        .WithMany("Investigations")
-                        .HasForeignKey("InvestigatorId");
-
-                    b.HasOne("nemesys_project.Models.NemesysUser", null)
-                        .WithMany("Investigations")
-                        .HasForeignKey("NemesysUserId");
 
                     b.Navigation("Investigator");
 
@@ -451,9 +427,9 @@ namespace nemesys_project.Migrations
 
             modelBuilder.Entity("nemesys_project.Models.Report", b =>
                 {
-                    b.HasOne("nemesys_project.Models.NemesysUser", null)
+                    b.HasOne("nemesys_project.Models.NemesysUser", "Reporter")
                         .WithMany("Reports")
-                        .HasForeignKey("NemesysUserId");
+                        .HasForeignKey("ReporterRefId");
 
                     b.HasOne("nemesys_project.Models.Status", "Status")
                         .WithMany("Reports")
@@ -461,12 +437,9 @@ namespace nemesys_project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Status");
-                });
+                    b.Navigation("Reporter");
 
-            modelBuilder.Entity("nemesys_project.Models.Investigator", b =>
-                {
-                    b.Navigation("Investigations");
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.NemesysUser", b =>

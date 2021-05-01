@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Report>
+
+@{
+    ViewData["Title"] = "ManageReports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ManageReports</h1>
+@if (Model.Any())
+{
+
+    foreach (var report in Model)
+    {
+        if(@report.Reporter!=null)
+                    {
+<div class="card mb-3">
+    <div class="card-header">
+        Report Date @report.CreationDate
+    </div>
+    <div class="card-body">
+        Hazard Location : @report.HazardLocation <br />
+        Hazard Type : @report.HazardType <br />
+        Date of the Hazard : @report.HazardDate <br />
+        Description : @report.Description <br />
+        Status : @report.Status.StatusOfReport <br />
+        Reporter Mail : @report.Reporter.Email <br />
+        Reporter Mobile : @report.Reporter.PhoneNumber <br />
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-primary"
+           asp-action="CreateInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@report.ReportId">
+            Create Investigation
+        </a>
+    </div>
+</div>
+                    }
+        
+    }
+
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            You have no reports yet
+        </div>
+        </div>
+       
+}
