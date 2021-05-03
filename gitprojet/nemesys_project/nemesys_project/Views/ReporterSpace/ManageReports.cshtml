@@ -26,14 +26,24 @@
                             Status : @report.Reporter.Email <br />
                         </div>
                         <div class="card-footer">
-                            <a  class="btn btn-primary"
-                                asp-action="EditReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
+                            <a class="btn btn-primary"
+                               asp-action="EditReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
                                 Edit
                             </a>
+                            @if (report.InvestigationRefId != null)
+                            {
+                                <a class="btn btn-primary"
+                                   asp-action="ShowInvestigation" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
+                                    Show Investigation
+                                </a>
+                            }
                             <a class="btn btn-danger"
-                             asp-action="DeleteReport" asp-controller="ReporterSpace"  asp-route-id="@report.ReportId">
-                               Delete
+                               asp-action="DeleteReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
+                                Delete
                             </a>
+
+
+
                         </div>
                     </div>
                 }

@@ -13,6 +13,7 @@ namespace nemesys_project.Models
         Report Add(Report report);
         Report Update(Report reportChanges);
         void UpdateStatus(int id, int StatusChange);
+        void UpdateInvestigation(int id, int InvestigationRefId);
         Report Delete(int id);
         Task<Report> Find(int id);
 

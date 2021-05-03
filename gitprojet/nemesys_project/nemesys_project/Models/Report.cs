@@ -12,9 +12,9 @@ namespace nemesys_project.Models
     {
 
         public int ReportId { get; set; }
-        public DateTime CreationDate { get; set;}
+        public DateTime CreationDate { get; set; }
         public DateTime HazardDate { get; set; }
-        public  string HazardType { get; set; }
+        public string HazardType { get; set; }
         public string Description { get; set; }
         public string HazardLocation { get; set; }
         public double LongitudeLocation { get; set; }
@@ -29,9 +29,9 @@ namespace nemesys_project.Models
         public string? ReporterRefId { get; set; }
         public NemesysUser Reporter { get; set; }
 
-        public virtual Investigation Investigation { get; set; }
-
-
+        [ForeignKey("Investigation")]
+        public int? InvestigationRefId { get; set; }
+        public Investigation Investigation { get; set; }
 
     }
 }

@@ -76,6 +76,14 @@ namespace nemesys_project.Models
            
             
         }
+        public void UpdateInvestigation(int id, int InvestigationRefId)
+        {
+            var report = DbContext.Reports.Find(id);
+            report.InvestigationRefId = InvestigationRefId;
+            DbContext.SaveChanges();
+
+
+        }
 
         public List<Report> GetAllNotInvestigateReports()
         {

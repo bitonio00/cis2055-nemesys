@@ -86,6 +86,7 @@ namespace nemesys_project.Controllers
                 };
                 investigationRepository.Update(investigation);
                 reportRepository.UpdateStatus(modelInvestigation.ReportRefId, modelInvestigation.StatusId);
+               // reportRepository.UpdateInvestigation(modelInvestigation.ReportRefId, modelInvestigation.InvestigationId);
                 return RedirectToAction("ManageInvestigations", "InvestigatorSpace");
             }
             return View();
@@ -117,6 +118,7 @@ namespace nemesys_project.Controllers
                 };
                 investigationRepository.Add(investigation);
                 reportRepository.UpdateStatus(investigationModel.ReportId, investigationModel.StatusId);
+                reportRepository.UpdateInvestigation(investigationModel.ReportId, investigation.InvestigationId);
                 return RedirectToAction("ManageInvestigations", "InvestigatorSpace");
             }
             return View(investigationModel);

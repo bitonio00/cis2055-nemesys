@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using nemesys_project.Models;
+using nemesys_project.Models.Interfaces;
 using nemesys_project.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,15 @@ namespace nemesys_project.Controllers
         private readonly IReportRepository reportRepository;
         private readonly INemesysUserRepository userRepository;
         private readonly IStatusRepository statusRepository;
-        public ReporterSpaceController(UserManager<NemesysUser> userManager, IReportRepository reportRepository, INemesysUserRepository userRepository, IStatusRepository statusRepository)
+        private readonly IInvestigationRepository investigationRepository;
+        public ReporterSpaceController(UserManager<NemesysUser> userManager, IReportRepository reportRepository, INemesysUserRepository userRepository,
+            IStatusRepository statusRepository, IInvestigationRepository investigationRepository)
         {
             this.userManager = userManager;
             this.reportRepository = reportRepository;
             this.userRepository = userRepository;
             this.statusRepository = statusRepository;
+            this.investigationRepository = investigationRepository;
         }
 
         // GET: ReporterSpaceController
@@ -87,7 +91,11 @@ namespace nemesys_project.Controllers
             
             return View();
         }
-
+       // [HttpGet]
+        public Investigation ShowInvestigation(int id)
+        {
+           return investigationRepository.GetInvestigation(id);
+        }
         [HttpGet]
         public async Task<IActionResult> EditReport(int id)
         {
@@ -105,7 +113,8 @@ namespace nemesys_project.Controllers
                 LatitudeLocation=report.LatitudeLocation,
                 LongitudeLocation=report.LongitudeLocation,
                 UpVote=report.UpVote,
-                ReporterRefId=report.ReporterRefId
+                ReporterRefId=report.ReporterRefId,
+                InvestigationRefId= (int)report.InvestigationRefId
             };
             return View(model);
         }
@@ -129,7 +138,9 @@ namespace nemesys_project.Controllers
                     CreationDate = modelReport.CreationDate,
                     LongitudeLocation = modelReport.LongitudeLocation,
                     LatitudeLocation = modelReport.LatitudeLocation,
-                    UpVote = modelReport.UpVote
+                    UpVote = modelReport.UpVote,
+                    InvestigationRefId=modelReport.InvestigationRefId
+                    
                 };
                 reportRepository.Update(report);
                 return RedirectToAction("ManageReports", "ReporterSpace");
