@@ -10,8 +10,8 @@ using nemesys_project.Context;
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    [Migration("20210501154002_update_investigation")]
-    partial class update_investigation
+    [Migration("20210503173741_new_strat")]
+    partial class new_strat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace nemesys_project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9e8578c2-5ee7-430d-9912-1c047edf3dfa",
-                            ConcurrencyStamp = "bbb245db-7e2a-45ff-822c-1b5138815f02",
+                            Id = "4a20659f-1585-48cc-b24b-0f833fa8902d",
+                            ConcurrencyStamp = "63241a82-36b4-471d-8ddc-1862f7d79c0d",
                             Name = "reporter",
                             NormalizedName = "REPORTER"
                         },
                         new
                         {
-                            Id = "867b5310-9b64-41db-a2f9-1b0df0806ecb",
-                            ConcurrencyStamp = "72e4aa4a-5f10-46fd-b94d-4c080b540966",
+                            Id = "bc553c84-87ab-4b1f-a1b7-e91d87fbcc37",
+                            ConcurrencyStamp = "b99c6afa-3d35-427f-9857-ff4a517163d8",
                             Name = "investigator",
                             NormalizedName = "INVESTIGATOR"
                         });
@@ -197,8 +197,7 @@ namespace nemesys_project.Migrations
 
                     b.HasIndex("InvestigatorRefId");
 
-                    b.HasIndex("ReportRefId")
-                        .IsUnique();
+                    b.HasIndex("ReportRefId");
 
                     b.ToTable("Investigations");
                 });
@@ -299,6 +298,9 @@ namespace nemesys_project.Migrations
                     b.Property<string>("HazardType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InvestigationRefId")
+                        .HasColumnType("int");
+
                     b.Property<double>("LatitudeLocation")
                         .HasColumnType("float");
 
@@ -315,6 +317,8 @@ namespace nemesys_project.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ReportId");
+
+                    b.HasIndex("InvestigationRefId");
 
                     b.HasIndex("ReporterRefId");
 
@@ -418,8 +422,8 @@ namespace nemesys_project.Migrations
                         .HasForeignKey("InvestigatorRefId");
 
                     b.HasOne("nemesys_project.Models.Report", "Report")
-                        .WithOne("Investigation")
-                        .HasForeignKey("nemesys_project.Models.Investigation", "ReportRefId")
+                        .WithMany()
+                        .HasForeignKey("ReportRefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -430,6 +434,10 @@ namespace nemesys_project.Migrations
 
             modelBuilder.Entity("nemesys_project.Models.Report", b =>
                 {
+                    b.HasOne("nemesys_project.Models.Investigation", "Investigation")
+                        .WithMany()
+                        .HasForeignKey("InvestigationRefId");
+
                     b.HasOne("nemesys_project.Models.NemesysUser", "Reporter")
                         .WithMany("Reports")
                         .HasForeignKey("ReporterRefId");
@@ -439,6 +447,8 @@ namespace nemesys_project.Migrations
                         .HasForeignKey("StatusRefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Investigation");
 
                     b.Navigation("Reporter");
 
@@ -450,11 +460,6 @@ namespace nemesys_project.Migrations
                     b.Navigation("Investigations");
 
                     b.Navigation("Reports");
-                });
-
-            modelBuilder.Entity("nemesys_project.Models.Report", b =>
-                {
-                    b.Navigation("Investigation");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.Status", b =>

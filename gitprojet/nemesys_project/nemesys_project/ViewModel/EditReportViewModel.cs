@@ -27,7 +27,7 @@ namespace nemesys_project.ViewModel
         public double LatitudeLocation { get; set; }
         public int UpVote { get; set; }
         public string ReporterRefId { get; set; }
-        public int InvestigationRefId { get; set; }
+        public int? InvestigationRefId { get; set; }
 
 
 

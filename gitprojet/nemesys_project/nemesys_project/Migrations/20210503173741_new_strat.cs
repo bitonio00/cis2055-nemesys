@@ -169,46 +169,13 @@ namespace nemesys_project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reports",
-                columns: table => new
-                {
-                    ReportId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HazardDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HazardType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HazardLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LongitudeLocation = table.Column<double>(type: "float", nullable: false),
-                    LatitudeLocation = table.Column<double>(type: "float", nullable: false),
-                    UpVote = table.Column<int>(type: "int", nullable: false),
-                    StatusRefId = table.Column<int>(type: "int", nullable: false),
-                    ReporterRefId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reports", x => x.ReportId);
-                    table.ForeignKey(
-                        name: "FK_Reports_AspNetUsers_ReporterRefId",
-                        column: x => x.ReporterRefId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Reports_Status_StatusRefId",
-                        column: x => x.StatusRefId,
-                        principalTable: "Status",
-                        principalColumn: "StatusId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Investigations",
                 columns: table => new
                 {
                     InvestigationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfAction = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     InvestigatorRefId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -223,11 +190,46 @@ namespace nemesys_project.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HazardDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HazardType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HazardLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LongitudeLocation = table.Column<double>(type: "float", nullable: false),
+                    LatitudeLocation = table.Column<double>(type: "float", nullable: false),
+                    UpVote = table.Column<int>(type: "int", nullable: false),
+                    StatusRefId = table.Column<int>(type: "int", nullable: false),
+                    ReporterRefId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    InvestigationRefId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                     table.ForeignKey(
-                        name: "FK_Investigations_Reports_ReportRefId",
-                        column: x => x.ReportRefId,
-                        principalTable: "Reports",
-                        principalColumn: "ReportId",
+                        name: "FK_Reports_AspNetUsers_ReporterRefId",
+                        column: x => x.ReporterRefId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reports_Investigations_InvestigationRefId",
+                        column: x => x.InvestigationRefId,
+                        principalTable: "Investigations",
+                        principalColumn: "InvestigationId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reports_Status_StatusRefId",
+                        column: x => x.StatusRefId,
+                        principalTable: "Status",
+                        principalColumn: "StatusId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -236,8 +238,8 @@ namespace nemesys_project.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4b37a348-5a94-4613-bb7e-d65df0c21ac9", "5a137798-f51b-4126-85e4-c4be76ce6def", "reporter", "REPORTER" },
-                    { "e583647a-fd32-45e1-8883-c1899a35b852", "10d003fc-f44f-4a5d-9655-291064ade02f", "investigator", "INVESTIGATOR" }
+                    { "4a20659f-1585-48cc-b24b-0f833fa8902d", "63241a82-36b4-471d-8ddc-1862f7d79c0d", "reporter", "REPORTER" },
+                    { "bc553c84-87ab-4b1f-a1b7-e91d87fbcc37", "b99c6afa-3d35-427f-9857-ff4a517163d8", "investigator", "INVESTIGATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -298,8 +300,12 @@ namespace nemesys_project.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Investigations_ReportRefId",
                 table: "Investigations",
-                column: "ReportRefId",
-                unique: true);
+                column: "ReportRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_InvestigationRefId",
+                table: "Reports",
+                column: "InvestigationRefId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_ReporterRefId",
@@ -310,10 +316,30 @@ namespace nemesys_project.Migrations
                 name: "IX_Reports_StatusRefId",
                 table: "Reports",
                 column: "StatusRefId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Investigations_Reports_ReportRefId",
+                table: "Investigations",
+                column: "ReportRefId",
+                principalTable: "Reports",
+                principalColumn: "ReportId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Investigations_AspNetUsers_InvestigatorRefId",
+                table: "Investigations");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Reports_AspNetUsers_ReporterRefId",
+                table: "Reports");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Investigations_Reports_ReportRefId",
+                table: "Investigations");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -330,16 +356,16 @@ namespace nemesys_project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Investigations");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Reports");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Investigations");
 
             migrationBuilder.DropTable(
                 name: "Status");

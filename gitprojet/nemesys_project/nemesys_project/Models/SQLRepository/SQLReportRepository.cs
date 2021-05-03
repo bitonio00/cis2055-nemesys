@@ -62,8 +62,8 @@ namespace nemesys_project.Models
             // if(DbContext.Reports.Find(id))
              var report =await  DbContext.Reports.Include(c => c.Status).FirstOrDefaultAsync(i=>i.ReportId==id);
             //}
-           
 
+            var a=report.ReportId;
 
             return report;
         }

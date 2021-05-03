@@ -91,16 +91,18 @@ namespace nemesys_project.Controllers
             
             return View();
         }
-       // [HttpGet]
+       /* [HttpGet]
         public Investigation ShowInvestigation(int id)
         {
            return investigationRepository.GetInvestigation(id);
-        }
+        }*/
         [HttpGet]
         public async Task<IActionResult> EditReport(int id)
         {
             var report =await  reportRepository.Find(id);
-            var model = new EditReportViewModel
+          
+
+             var model = new EditReportViewModel
             {
                 Id=report.ReportId,
                 Description = report.Description,
@@ -114,9 +116,9 @@ namespace nemesys_project.Controllers
                 LongitudeLocation=report.LongitudeLocation,
                 UpVote=report.UpVote,
                 ReporterRefId=report.ReporterRefId,
-                InvestigationRefId= (int)report.InvestigationRefId
-            };
-            return View(model);
+                InvestigationRefId= report.InvestigationRefId
+            }; 
+                return View(model);
         }
 
         [HttpPost]
@@ -126,6 +128,7 @@ namespace nemesys_project.Controllers
             //DateTime b = report2.CreationDate;
             if (ModelState.IsValid)
             {
+              
                 Report report = new Report
                 {
                     ReportId = modelReport.Id,

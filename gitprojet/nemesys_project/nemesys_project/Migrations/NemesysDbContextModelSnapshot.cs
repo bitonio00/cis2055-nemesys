@@ -48,15 +48,15 @@ namespace nemesys_project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b6c75e8-7139-42ce-8746-619e73cf9e5f",
-                            ConcurrencyStamp = "b048e87a-c4a9-4d24-9fb0-303bcae9d0ab",
+                            Id = "4a20659f-1585-48cc-b24b-0f833fa8902d",
+                            ConcurrencyStamp = "63241a82-36b4-471d-8ddc-1862f7d79c0d",
                             Name = "reporter",
                             NormalizedName = "REPORTER"
                         },
                         new
                         {
-                            Id = "041304f9-eb90-4caf-90f3-9c050d25162a",
-                            ConcurrencyStamp = "53efe1fc-5ef3-4391-a53b-c9d8f48b6bca",
+                            Id = "bc553c84-87ab-4b1f-a1b7-e91d87fbcc37",
+                            ConcurrencyStamp = "b99c6afa-3d35-427f-9857-ff4a517163d8",
                             Name = "investigator",
                             NormalizedName = "INVESTIGATOR"
                         });
