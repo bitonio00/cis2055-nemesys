@@ -16,7 +16,7 @@ namespace nemesys_project.Models.SQLRepository
         }
         public IEnumerable<Report> GetAllUserReports(string Id)
         {
-            var userMessages = DbContext.Reports.Include(c=>c.Reporter).Include(c => c.Status)
+            var userMessages = DbContext.Reports.Include(c=>c.Reporter).Include(c => c.Status).Include(c=>c.Vote)
               .Where(u => u.ReporterRefId.Equals(Id));
           
             return userMessages;

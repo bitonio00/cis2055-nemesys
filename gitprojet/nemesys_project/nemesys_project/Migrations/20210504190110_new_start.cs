@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace nemesys_project.Migrations
 {
-    public partial class new_strat : Migration
+    public partial class new_start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,6 +60,19 @@ namespace nemesys_project.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Status", x => x.StatusId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    VoteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Score = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => x.VoteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,6 +182,30 @@ namespace nemesys_project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NemesysUserVotes",
+                columns: table => new
+                {
+                    NemesysUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VoteId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NemesysUserVotes", x => new { x.NemesysUserId, x.VoteId });
+                    table.ForeignKey(
+                        name: "FK_NemesysUserVotes_AspNetUsers_NemesysUserId",
+                        column: x => x.NemesysUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NemesysUserVotes_Votes_VoteId",
+                        column: x => x.VoteId,
+                        principalTable: "Votes",
+                        principalColumn: "VoteId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Investigations",
                 columns: table => new
                 {
@@ -208,7 +245,8 @@ namespace nemesys_project.Migrations
                     UpVote = table.Column<int>(type: "int", nullable: false),
                     StatusRefId = table.Column<int>(type: "int", nullable: false),
                     ReporterRefId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    InvestigationRefId = table.Column<int>(type: "int", nullable: true)
+                    InvestigationRefId = table.Column<int>(type: "int", nullable: true),
+                    VoteRefId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -231,6 +269,12 @@ namespace nemesys_project.Migrations
                         principalTable: "Status",
                         principalColumn: "StatusId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Votes_VoteRefId",
+                        column: x => x.VoteRefId,
+                        principalTable: "Votes",
+                        principalColumn: "VoteId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -238,8 +282,8 @@ namespace nemesys_project.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4a20659f-1585-48cc-b24b-0f833fa8902d", "63241a82-36b4-471d-8ddc-1862f7d79c0d", "reporter", "REPORTER" },
-                    { "bc553c84-87ab-4b1f-a1b7-e91d87fbcc37", "b99c6afa-3d35-427f-9857-ff4a517163d8", "investigator", "INVESTIGATOR" }
+                    { "a6587c09-6b7e-4110-bed1-5df6461c7784", "e897ee4e-5fe6-4603-a409-79962e8c7962", "reporter", "REPORTER" },
+                    { "dd9a6643-8bfb-4f52-b851-527d1862f1e4", "b1086b55-338c-4b13-a8c4-8f541a4b9fa4", "investigator", "INVESTIGATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -303,6 +347,11 @@ namespace nemesys_project.Migrations
                 column: "ReportRefId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NemesysUserVotes_VoteId",
+                table: "NemesysUserVotes",
+                column: "VoteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reports_InvestigationRefId",
                 table: "Reports",
                 column: "InvestigationRefId");
@@ -316,6 +365,13 @@ namespace nemesys_project.Migrations
                 name: "IX_Reports_StatusRefId",
                 table: "Reports",
                 column: "StatusRefId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_VoteRefId",
+                table: "Reports",
+                column: "VoteRefId",
+                unique: true,
+                filter: "[VoteRefId] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Investigations_Reports_ReportRefId",
@@ -356,6 +412,9 @@ namespace nemesys_project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "NemesysUserVotes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -369,6 +428,9 @@ namespace nemesys_project.Migrations
 
             migrationBuilder.DropTable(
                 name: "Status");
+
+            migrationBuilder.DropTable(
+                name: "Votes");
         }
     }
 }

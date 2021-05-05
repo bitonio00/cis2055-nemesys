@@ -41,11 +41,15 @@ namespace nemesys_project
             services.AddScoped<IStatusRepository, SQLStatusRepository>();
             services.AddScoped<INemesysUserRepository, SQLNemesysUserRepository>();
             services.AddScoped<IInvestigationRepository, SQLInvestigationRepository>();
+            services.AddScoped<IVoteRepository, SQLVoteRepository>();
+            services.AddScoped<INemesysUserVoteRepository, SQLNemesysUserVoteRepository>();
+
+            
 
 
 
         }
-        
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

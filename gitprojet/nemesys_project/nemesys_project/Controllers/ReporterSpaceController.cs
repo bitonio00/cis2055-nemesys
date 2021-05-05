@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace nemesys_project.Controllers
 {
+    [Authorize(Roles = "reporter")]
     public class ReporterSpaceController : Controller
     {
         private readonly UserManager<NemesysUser> userManager;
@@ -46,9 +47,10 @@ namespace nemesys_project.Controllers
         {
             return View();
         }
-        [Authorize(Roles="reporter")]
+        
         public IActionResult ManageReports()
         {
+            
             return View(userRepository.GetAllUserReports(userManager.GetUserId(User)));
             
         }
@@ -91,11 +93,13 @@ namespace nemesys_project.Controllers
             
             return View();
         }
-       /* [HttpGet]
-        public Investigation ShowInvestigation(int id)
+        [HttpGet]
+        public async Task<IActionResult> ShowInvestigation(int id)
         {
-           return investigationRepository.GetInvestigation(id);
-        }*/
+            var a = await investigationRepository.GetInvestigation(id);
+           
+           return View(a);
+        }
         [HttpGet]
         public async Task<IActionResult> EditReport(int id)
         {
@@ -116,7 +120,8 @@ namespace nemesys_project.Controllers
                 LongitudeLocation=report.LongitudeLocation,
                 UpVote=report.UpVote,
                 ReporterRefId=report.ReporterRefId,
-                InvestigationRefId= report.InvestigationRefId
+                InvestigationRefId= report.InvestigationRefId,
+                VoteRefId=report.VoteRefId
             }; 
                 return View(model);
         }
@@ -142,7 +147,8 @@ namespace nemesys_project.Controllers
                     LongitudeLocation = modelReport.LongitudeLocation,
                     LatitudeLocation = modelReport.LatitudeLocation,
                     UpVote = modelReport.UpVote,
-                    InvestigationRefId=modelReport.InvestigationRefId
+                    InvestigationRefId=modelReport.InvestigationRefId,
+                    VoteRefId=modelReport.VoteRefId
                     
                 };
                 reportRepository.Update(report);

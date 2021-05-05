@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace nemesys_project.Controllers
 {
+    [Authorize(Roles = "investigator")]
     public class InvestigatorSpaceController : Controller
     {
 
@@ -35,7 +36,7 @@ namespace nemesys_project.Controllers
             return View();
         }
 
-        [Authorize(Roles = "investigator")]
+        
         public IActionResult ManageInvestigations()
         {
             return View(userRepository.GetAllUserInvestigations(userManager.GetUserId(User)));

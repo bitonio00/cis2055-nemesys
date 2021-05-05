@@ -18,6 +18,7 @@ namespace nemesys_project.Models
         {
             DbContext.Status.Add(status);
             DbContext.SaveChanges();
+            
             return status;
         }
 

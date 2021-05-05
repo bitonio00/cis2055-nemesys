@@ -38,7 +38,7 @@ namespace nemesys_project.Models.SQLRepository
 
         public async Task<Investigation> Find(int id)
         {
-            var investigation = await DbContext.Investigations.Include(c => c.Report).FirstOrDefaultAsync(i => i.InvestigationId == id);
+            var investigation = await DbContext.Investigations.Include(c => c.Report).Include(c=>c.Investigator).FirstOrDefaultAsync(i => i.InvestigationId == id);
             return investigation;
         }
 
@@ -47,9 +47,11 @@ namespace nemesys_project.Models.SQLRepository
             return DbContext.Investigations;
         }
 
-        public Investigation GetInvestigation(int Id)
+        public async Task<Investigation> GetInvestigation(int Id)
         {
-            return DbContext.Investigations.Find(Id);
+            var invest= await DbContext.Investigations.Include(c => c.Report).Include(c => c.Investigator).FirstOrDefaultAsync(i => i.InvestigationId == Id);
+            
+            return invest;
         }
 
         public Investigation Update(Investigation investigationChanges)

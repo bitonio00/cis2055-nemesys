@@ -19,6 +19,7 @@ namespace nemesys_project.Models
         public int Upvote { get; set; }
         public ICollection<Investigation> Investigations { get; set; }
         public ICollection<Report> Reports { get; set; }
+        public ICollection<NemesysUserVote> NemesysUserVotes { get; set; }
 
     }
 }

@@ -15,7 +15,8 @@
                 {
                     <div class="card mb-3">
                         <div class="card-header">
-                            Report Date @report.CreationDate
+                            Report Date @report.CreationDate Vote:@if (report.Vote != null)
+                            {@report.Vote.Score}
                         </div>
                         <div class="card-body">
                             Hazard Location : @report.HazardLocation <br />

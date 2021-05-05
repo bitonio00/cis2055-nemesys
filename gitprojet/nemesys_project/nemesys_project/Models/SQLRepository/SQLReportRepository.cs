@@ -19,6 +19,7 @@ namespace nemesys_project.Models
         {
             DbContext.Reports.Add(report);
             DbContext.SaveChanges();
+            int i=report.ReportId;
             return report;
         }
 
@@ -35,7 +36,7 @@ namespace nemesys_project.Models
 
         public IEnumerable<Report> GetAllReports()
         {
-            return DbContext.Reports.Include(c => c.Status).Include(c=>c.Reporter);
+            return DbContext.Reports.Include(c => c.Status).Include(c=>c.Reporter).Include(c=>c.Vote);
         }
 
         public Report GetReport(int Id)
@@ -84,6 +85,21 @@ namespace nemesys_project.Models
 
 
         }
+        public int GetVoteId(int reportId)
+        {
+           var report= DbContext.Reports.Find(reportId);
+            var i=report.VoteRefId;
+            if(i==null)
+            {
+                return 0;
+            }
+            else
+            {
+            return (int)i;
+            }
+            
+           
+        }
 
         public List<Report> GetAllNotInvestigateReports()
         {
@@ -96,6 +112,15 @@ namespace nemesys_project.Models
                 }
             }
             return reports;
+        }
+
+        public void Vote(int id)
+        {
+            Report report = DbContext.Reports.Find(id);
+            report.UpVote++;
+            DbContext.SaveChanges();
+
+
         }
     }
 }

@@ -15,7 +15,9 @@ namespace nemesys_project.Models
         void UpdateStatus(int id, int StatusChange);
         void UpdateInvestigation(int id, int InvestigationRefId);
         Report Delete(int id);
+        void Vote(int id);
         Task<Report> Find(int id);
+        int GetVoteId(int reportId);
 
     }
 }

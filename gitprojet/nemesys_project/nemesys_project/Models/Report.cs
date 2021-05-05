@@ -32,6 +32,10 @@ namespace nemesys_project.Models
         [ForeignKey("Investigation")]
         public int? InvestigationRefId { get; set; }
         public Investigation Investigation { get; set; }
+        
+        [ForeignKey("Vote")]
+        public int? VoteRefId { get; set; }
+        public Vote Vote { get; set; }
 
     }
 }

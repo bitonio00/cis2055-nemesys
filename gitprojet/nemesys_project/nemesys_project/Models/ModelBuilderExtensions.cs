@@ -12,6 +12,17 @@ namespace nemesys_project.Models
        // private readonly RoleManager roleManager;
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<NemesysUserVote>()
+   .HasKey(nv => new { nv.NemesysUserId, nv.VoteId });
+            modelBuilder.Entity<NemesysUserVote>()
+                .HasOne(nv => nv.NemesysUser)
+                .WithMany(nv => nv.NemesysUserVotes)
+                .HasForeignKey(nv => nv.NemesysUserId);
+            modelBuilder.Entity<NemesysUserVote>()
+                .HasOne(nv => nv.Vote)
+                .WithMany(nv => nv.NemesysUserVotes)
+                .HasForeignKey(nv => nv.VoteId);
+
             modelBuilder.Entity<Status>().HasData(
                 new Status { StatusId = 1, StatusOfReport = "no current investigation" },
                 new Status {StatusId=2, StatusOfReport = "closed" },

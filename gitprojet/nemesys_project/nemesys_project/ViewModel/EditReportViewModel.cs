@@ -29,6 +29,8 @@ namespace nemesys_project.ViewModel
         public string ReporterRefId { get; set; }
         public int? InvestigationRefId { get; set; }
 
+        public int? VoteRefId { get; set; }
+
 
 
     }

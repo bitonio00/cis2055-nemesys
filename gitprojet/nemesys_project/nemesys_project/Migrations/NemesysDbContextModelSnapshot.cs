@@ -48,15 +48,15 @@ namespace nemesys_project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4a20659f-1585-48cc-b24b-0f833fa8902d",
-                            ConcurrencyStamp = "63241a82-36b4-471d-8ddc-1862f7d79c0d",
+                            Id = "a6587c09-6b7e-4110-bed1-5df6461c7784",
+                            ConcurrencyStamp = "e897ee4e-5fe6-4603-a409-79962e8c7962",
                             Name = "reporter",
                             NormalizedName = "REPORTER"
                         },
                         new
                         {
-                            Id = "bc553c84-87ab-4b1f-a1b7-e91d87fbcc37",
-                            ConcurrencyStamp = "b99c6afa-3d35-427f-9857-ff4a517163d8",
+                            Id = "dd9a6643-8bfb-4f52-b851-527d1862f1e4",
+                            ConcurrencyStamp = "b1086b55-338c-4b13-a8c4-8f541a4b9fa4",
                             Name = "investigator",
                             NormalizedName = "INVESTIGATOR"
                         });
@@ -274,6 +274,21 @@ namespace nemesys_project.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("nemesys_project.Models.NemesysUserVote", b =>
+                {
+                    b.Property<string>("NemesysUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VoteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NemesysUserId", "VoteId");
+
+                    b.HasIndex("VoteId");
+
+                    b.ToTable("NemesysUserVotes");
+                });
+
             modelBuilder.Entity("nemesys_project.Models.Report", b =>
                 {
                     b.Property<int>("ReportId")
@@ -314,6 +329,9 @@ namespace nemesys_project.Migrations
                     b.Property<int>("UpVote")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VoteRefId")
+                        .HasColumnType("int");
+
                     b.HasKey("ReportId");
 
                     b.HasIndex("InvestigationRefId");
@@ -321,6 +339,10 @@ namespace nemesys_project.Migrations
                     b.HasIndex("ReporterRefId");
 
                     b.HasIndex("StatusRefId");
+
+                    b.HasIndex("VoteRefId")
+                        .IsUnique()
+                        .HasFilter("[VoteRefId] IS NOT NULL");
 
                     b.ToTable("Reports");
                 });
@@ -360,6 +382,21 @@ namespace nemesys_project.Migrations
                             StatusId = 4,
                             StatusOfReport = "being investigated"
                         });
+                });
+
+            modelBuilder.Entity("nemesys_project.Models.Vote", b =>
+                {
+                    b.Property<int>("VoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("VoteId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -430,6 +467,25 @@ namespace nemesys_project.Migrations
                     b.Navigation("Report");
                 });
 
+            modelBuilder.Entity("nemesys_project.Models.NemesysUserVote", b =>
+                {
+                    b.HasOne("nemesys_project.Models.NemesysUser", "NemesysUser")
+                        .WithMany("NemesysUserVotes")
+                        .HasForeignKey("NemesysUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("nemesys_project.Models.Vote", "Vote")
+                        .WithMany("NemesysUserVotes")
+                        .HasForeignKey("VoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NemesysUser");
+
+                    b.Navigation("Vote");
+                });
+
             modelBuilder.Entity("nemesys_project.Models.Report", b =>
                 {
                     b.HasOne("nemesys_project.Models.Investigation", "Investigation")
@@ -446,16 +502,24 @@ namespace nemesys_project.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("nemesys_project.Models.Vote", "Vote")
+                        .WithOne("Report")
+                        .HasForeignKey("nemesys_project.Models.Report", "VoteRefId");
+
                     b.Navigation("Investigation");
 
                     b.Navigation("Reporter");
 
                     b.Navigation("Status");
+
+                    b.Navigation("Vote");
                 });
 
             modelBuilder.Entity("nemesys_project.Models.NemesysUser", b =>
                 {
                     b.Navigation("Investigations");
+
+                    b.Navigation("NemesysUserVotes");
 
                     b.Navigation("Reports");
                 });
@@ -463,6 +527,13 @@ namespace nemesys_project.Migrations
             modelBuilder.Entity("nemesys_project.Models.Status", b =>
                 {
                     b.Navigation("Reports");
+                });
+
+            modelBuilder.Entity("nemesys_project.Models.Vote", b =>
+                {
+                    b.Navigation("NemesysUserVotes");
+
+                    b.Navigation("Report");
                 });
 #pragma warning restore 612, 618
         }

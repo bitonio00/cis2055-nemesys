@@ -20,8 +20,12 @@ namespace nemesys_project.Context
         public DbSet<Investigation> Investigations { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<NemesysUserVote> NemesysUserVotes { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
+           
             builder.Seed();
             base.OnModelCreating(builder);
             

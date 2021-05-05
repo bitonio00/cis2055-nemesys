@@ -164,3 +164,5 @@ C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\D
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\InvestigatorSpace\CreateInvestigation.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\InvestigatorSpace\EditInvestigation.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\ReporterSpace\ShowInvestigation.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\AllReport\ShowInvestigation.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\AllReport\Reports.cshtml.g.cs

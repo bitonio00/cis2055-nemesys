@@ -21,6 +21,7 @@
                     <ul class="nav">
                         <li>@Html.ActionLink(" " + "Home", "Index", "Home")</li>
                         <li>@Html.ActionLink(" " + "Hall Of Fame", "Index", "HallOfFame")</li>
+                        <li>@Html.ActionLink(" " + "Reports", "Reports", "AllReport")</li>
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li>@Html.ActionLink(" " + "LogOut" + User.Identity.Name, "LogOut", "Account")</li>
@@ -32,12 +33,12 @@
 
                         }
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("reporter"))
-                         {
+                        {
                             <li>@Html.ActionLink(" " + "My Space", "ManageReports", "ReporterSpace")</li>
                         }
-                        else if(signInManager.IsSignedIn(User) && User.IsInRole("investigator"))
+                        else if (signInManager.IsSignedIn(User) && User.IsInRole("investigator"))
                         {
-                           <li>@Html.ActionLink(" " + "My Space", "ManageInvestigations", "InvestigatorSpace")</li>
+                            <li>@Html.ActionLink(" " + "My Space", "ManageInvestigations", "InvestigatorSpace")</li>
                         }
 
                     </ul>
