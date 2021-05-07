@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace nemesys_project.ViewModel
         public int? InvestigationRefId { get; set; }
         public int? VoteRefId { get; set; }
         public string ImageUrl { get; set; }
+        public IFormFile ImageToUpload { get; set; } //used only when submitting form
 
 
 

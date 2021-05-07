@@ -151,7 +151,26 @@ namespace nemesys_project.Controllers
             //DateTime b = report2.CreationDate;
             if (ModelState.IsValid)
             {
-              
+                string fileName = "";
+                string imageUrl = "";
+                if (modelReport.ImageToUpload != null)
+                {
+                    //At this point you should check size, extension etc...
+                    //Then persist using a new name for consistency (e.g. new Guid)
+                    var extension = "." + modelReport.ImageToUpload.FileName.Split('.')[modelReport.ImageToUpload.FileName.Split('.').Length - 1];
+                    fileName = Guid.NewGuid().ToString() + extension;
+                    var path = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\reports\\" + fileName;
+                    using (var bits = new FileStream(path, FileMode.Create))
+                    {
+                        modelReport.ImageToUpload.CopyTo(bits);
+                    }
+                    imageUrl = "/images/reports/" + fileName;
+                }
+                else
+                {
+                    imageUrl = modelReport.ImageUrl;
+                }
+
                 Report report = new Report
                 {
                     ReportId = modelReport.Id,
@@ -167,9 +186,9 @@ namespace nemesys_project.Controllers
                     UpVote = modelReport.UpVote,
                     InvestigationRefId=modelReport.InvestigationRefId,
                     VoteRefId=modelReport.VoteRefId,
-                    ImageUrl=modelReport.ImageUrl
-                    
-                    
+                    ImageUrl= imageUrl
+
+
                 };
                 reportRepository.Update(report);
                 return RedirectToAction("ManageReports", "ReporterSpace");
