@@ -28,8 +28,8 @@ namespace nemesys_project.ViewModel
         public int UpVote { get; set; }
         public string ReporterRefId { get; set; }
         public int? InvestigationRefId { get; set; }
-
         public int? VoteRefId { get; set; }
+        public string ImageUrl { get; set; }
 
 
 

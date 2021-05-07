@@ -7,6 +7,7 @@ using nemesys_project.Models.Interfaces;
 using nemesys_project.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,9 +49,10 @@ namespace nemesys_project.Controllers
             return View();
         }
         
+        
         public IActionResult ManageReports()
         {
-            
+
             return View(userRepository.GetAllUserReports(userManager.GetUserId(User)));
             
         }
@@ -68,10 +70,23 @@ namespace nemesys_project.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddReport(ReportViewModel reportModel)
+        public IActionResult AddReport([Bind("HazardDate,HazardLocation,HazardType,Description, ImageToUpload")] ReportViewModel reportModel)
         {
             if(ModelState.IsValid)
             {
+                string fileName = "";
+                if (reportModel.ImageToUpload != null)
+                {
+                    //At this point you should check size, extension etc...
+                    //Then persist using a new name for consistency (e.g. new Guid)
+                    var extension = "." + reportModel.ImageToUpload.FileName.Split('.')[reportModel.ImageToUpload.FileName.Split('.').Length - 1];
+                    fileName = Guid.NewGuid().ToString() + extension;
+                    var path = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\reports\\" + fileName;
+                    using (var bits = new FileStream(path, FileMode.Create))
+                    {
+                        reportModel.ImageToUpload.CopyTo(bits);
+                    }
+                }
                 var id = userManager.GetUserId(User);
                 var report = new Report
                 {
@@ -85,6 +100,7 @@ namespace nemesys_project.Controllers
                     ReporterRefId =id,
                     LatitudeLocation = 0,
                     LongitudeLocation = 0,
+                    ImageUrl = "/images/reports/" + fileName,
 
                 };
                 reportRepository.Add(report);
@@ -104,24 +120,26 @@ namespace nemesys_project.Controllers
         public async Task<IActionResult> EditReport(int id)
         {
             var report =await  reportRepository.Find(id);
-          
 
-             var model = new EditReportViewModel
+
+            var model = new EditReportViewModel
             {
-                Id=report.ReportId,
+                Id = report.ReportId,
                 Description = report.Description,
                 HazardDate = report.HazardDate,
                 HazardLocation = report.HazardLocation,
                 HazardType = report.HazardType,
                 StatusOfHazard = report.Status.StatusOfReport,
-                StatusRefId= report.StatusRefId,
-                CreationDate=report.CreationDate,
-                LatitudeLocation=report.LatitudeLocation,
-                LongitudeLocation=report.LongitudeLocation,
-                UpVote=report.UpVote,
-                ReporterRefId=report.ReporterRefId,
-                InvestigationRefId= report.InvestigationRefId,
-                VoteRefId=report.VoteRefId
+                StatusRefId = report.StatusRefId,
+                CreationDate = report.CreationDate,
+                LatitudeLocation = report.LatitudeLocation,
+                LongitudeLocation = report.LongitudeLocation,
+                UpVote = report.UpVote,
+                ReporterRefId = report.ReporterRefId,
+                InvestigationRefId = report.InvestigationRefId,
+                VoteRefId = report.VoteRefId,
+                ImageUrl = report.ImageUrl
+                
             }; 
                 return View(model);
         }
@@ -148,7 +166,9 @@ namespace nemesys_project.Controllers
                     LatitudeLocation = modelReport.LatitudeLocation,
                     UpVote = modelReport.UpVote,
                     InvestigationRefId=modelReport.InvestigationRefId,
-                    VoteRefId=modelReport.VoteRefId
+                    VoteRefId=modelReport.VoteRefId,
+                    ImageUrl=modelReport.ImageUrl
+                    
                     
                 };
                 reportRepository.Update(report);

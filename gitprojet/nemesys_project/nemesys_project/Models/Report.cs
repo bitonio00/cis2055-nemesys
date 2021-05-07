@@ -20,6 +20,7 @@ namespace nemesys_project.Models
         public double LongitudeLocation { get; set; }
         public double LatitudeLocation { get; set; }
         public int UpVote { get; set; }
+        public string ImageUrl { get; set; }
 
         [ForeignKey("Status")]
         public int StatusRefId { get; set; }
