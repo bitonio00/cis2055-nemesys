@@ -197,8 +197,11 @@ namespace nemesys_project.Controllers
 
 
         }
-
-
+        public IActionResult Maps()
+        {
+            return View();
+        }
+            
         // POST: ReporterSpaceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
