@@ -1,17 +1,33 @@
-﻿
+﻿@model IEnumerable<Report>
 @{
     ViewData["Title"] = "Maps";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (Model.Any())
+{
+    int i = 0;
+    string lat = "lat";
+    string lng = "lng";
 
+    foreach (var report in Model)
+    {
+        i++;
+        <div class="form-group row">
+            <input type="hidden" asp-for="@report.LatitudeLocation" id="@lat@i"/>
+        </div>
+        <div class="form-group row">
+            <input type="hidden" asp-for="@report.LongitudeLocation" id="@lng@i" />
+        </div>
+    }
+
+}
 <style>
     #map {
-        height:400px;
-        width:700px;
-
+        height: 400px;
+        width: 700px;
     }
 </style>
-<br/>
+<br />
 <div class="row">
     <div id="map"> </div>
     <script>

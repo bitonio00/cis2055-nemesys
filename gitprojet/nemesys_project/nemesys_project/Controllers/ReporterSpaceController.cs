@@ -48,8 +48,18 @@ namespace nemesys_project.Controllers
         {
             return View();
         }
-        
-        
+        public ActionResult Geocode()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Geocode(ReportViewModel report)
+        {
+           var a= report.HazardLocation;
+            return View();
+        }
+
+
         public IActionResult ManageReports()
         {
 
@@ -70,7 +80,7 @@ namespace nemesys_project.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddReport([Bind("HazardDate,HazardLocation,HazardType,Description, ImageToUpload")] ReportViewModel reportModel)
+        public IActionResult AddReport([Bind("HazardLocation,Lat,Lng,HazardDate,HazardType,Description, ImageToUpload")] ReportViewModel reportModel)
         {
             if(ModelState.IsValid)
             {
@@ -98,8 +108,8 @@ namespace nemesys_project.Controllers
                     UpVote = 0,
                     StatusRefId = 1,
                     ReporterRefId =id,
-                    LatitudeLocation = 0,
-                    LongitudeLocation = 0,
+                    LatitudeLocation =reportModel.Lat,
+                    LongitudeLocation = reportModel.Lng,
                     ImageUrl = "/images/reports/" + fileName,
 
                 };
@@ -197,6 +207,7 @@ namespace nemesys_project.Controllers
 
 
         }
+        [HttpGet]
         public IActionResult Maps()
         {
             return View();

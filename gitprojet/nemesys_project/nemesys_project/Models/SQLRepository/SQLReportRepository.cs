@@ -39,6 +39,13 @@ namespace nemesys_project.Models
             return DbContext.Reports.Include(c => c.Status).Include(c=>c.Reporter).Include(c=>c.Vote);
         }
 
+        public IEnumerable<Report> GetAllNotInvestigateReportsLocartion()
+        {
+           
+            return DbContext.Reports.Include(c => c.Status).Include(c => c.Reporter).Include(c => c.Vote).Where(u => u.StatusRefId==1);
+        }
+
+
         public Report GetReport(int Id)
         {
             return DbContext.Reports.Find(Id);

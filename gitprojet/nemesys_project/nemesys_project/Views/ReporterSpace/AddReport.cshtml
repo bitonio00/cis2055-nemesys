@@ -7,11 +7,37 @@
 <h1>AddReport</h1>
 
 <h4>Report</h4>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <div class="container">
+            <h2 id="text-center">Enter Hazard Location:</h2>
+            <form id="location-form">
+                <input type="text" id="location-input" class="form-control form-control-lg" />
+                <br />
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+            <div class="card-block" id="formatted-address"></div>
+            <div class="card-block" id="address-location"></div>
+        </div>
         <form asp-action="AddReport" method="post" role="form" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="HazardLocation" class="control-label">Confirm Full Hazard Location</label>
+                <input asp-for="HazardLocation" class="form-control" />
+                <span asp-validation-for="HazardLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lat" class="control-label">Confirm Latitude:</label>
+                <input asp-for="Lat" class="form-control" />
+                <span asp-validation-for="Lat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lng" class="control-label">Confirm Longitude</label>
+                <input asp-for="Lng" class="form-control" />
+                <span asp-validation-for="Lng" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="HazardDate" class="control-label"></label>
                 <input asp-for="HazardDate" class="form-control" />
@@ -33,11 +59,6 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HazardLocation" class="control-label"></label>
-                <input asp-for="HazardLocation" class="form-control" />
-                <span asp-validation-for="HazardLocation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="ImageToUpload" class="col-md-2"></label>
                 <div class="col-md-5">
                     <input type="file" asp-for="ImageToUpload" class="form-control" />
@@ -49,3 +70,51 @@
         </form>
     </div>
 </div>
+
+
+<script>
+
+    var locationForm = document.getElementById('location-form');
+    locationForm.addEventListener('submit', geocode);
+
+
+    function geocode(e) {
+        e.preventDefault();
+        var location = document.getElementById('location-input').value;
+        axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+            params: {
+                address: location,
+                key: 'AIzaSyAwIWe9dzbs3yOMx89_XQ8BCb-rAUFjXx4'
+            }
+        }).then(function (response) {
+            console.log(response);
+            var formattedAddress = response.data.results[0].formatted_address;
+
+            var addressComponents = response.data.results[0].address_components;
+            var lat = response.data.results[0].geometry.location.lat;
+            var lng = response.data.results[0].geometry.location.lng;
+            var geometryOutput = `
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Latitude</strong>:${lat}</li>
+                             <li class="list-group-item"><strong>Longitude</strong>:${lng}</li>
+                        </ul>`;
+            var addressComponentsOutput = '<ul class="list-group">';
+            for (var i = 0; i < addressComponents.length; ++i) {
+                addressComponentsOutput += `
+                        <li class="list-group-item"><strong>${addressComponents[i].types[0]}</strong>:
+                        ${addressComponents[i].long_name}</li >`;
+            }
+            addressComponentsOutput += '</ul>';
+
+            document.getElementById('formatted-address').innerHTML = formattedAddress;
+          //  document.getElementById('address-components').innerHTML = addressComponentsOutput;
+            document.getElementById('address-location').innerHTML = geometryOutput;
+
+        }).catch(function (error) {
+            console.log(error);
+
+        });
+
+    }
+
+</script>
