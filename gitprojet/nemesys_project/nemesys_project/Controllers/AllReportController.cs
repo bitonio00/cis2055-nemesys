@@ -90,6 +90,12 @@ namespace nemesys_project.Controllers
         {
             return View();
         }
+        //HAF ALex 
+        public IActionResult HallOfFame()
+        {
+
+            return View(userRepository.GetSortedUser());
+        }
 
         // POST: AllReportController/Create
         [HttpPost]
