@@ -91,6 +91,7 @@ namespace nemesys_project.Controllers
             return View();
         }
         //HAF ALex 
+        //commentaire en plus jsais pas pq
         public IActionResult HallOfFame()
         {
 
