@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using nemesys_project.Context;
 using System;
 using System.Collections.Generic;
@@ -11,12 +10,9 @@ namespace nemesys_project.Models.SQLRepository
     public class SQLNemesysUserRepository : INemesysUserRepository
     {
         private readonly NemesysDbContext DbContext;
-        private readonly UserManager<NemesysUser> userManager;
-        public SQLNemesysUserRepository(NemesysDbContext DbContext, UserManager<NemesysUser> userManager)
+        public SQLNemesysUserRepository(NemesysDbContext DbContext)
         {
             this.DbContext = DbContext;
-            //Alex
-            this.userManager = userManager;
         }
         public IEnumerable<Report> GetAllUserReports(string Id)
         {
@@ -35,29 +31,6 @@ namespace nemesys_project.Models.SQLRepository
         public IEnumerable<Report> GetAllReports()
         {
             return DbContext.Reports;
-        }
-
-        //Alex 
-        public List<(string, int)> GetSortedUser()
-        {
-            List<(string, int)> mylist = new List<(string, int)>();
-            var reportlist = DbContext.Reports.Include(c => c.Reporter).ToList();
-            foreach (var user in userManager.Users)
-            {
-                int cnt = 0;
-                foreach (var report in reportlist)
-                {
-                    if (report.Reporter.Email.Equals(user.Email))
-                    {
-                        cnt++;
-                    }
-                }
-                mylist.Add((user.Email, cnt));
-
-            }
-            var list = mylist.OrderByDescending(x => x.Item2).ToList();
-
-            return list;
         }
     }
 }
