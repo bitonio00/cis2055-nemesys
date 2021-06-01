@@ -57,10 +57,10 @@ namespace nemesys_project.Controllers
         {
 
 
-            bool create=nemesysUserVoteRepository.Add(userManager.GetUserId(User), id,"UpVote");
-            if(create==true)
+            bool create = nemesysUserVoteRepository.Add(userManager.GetUserId(User), id, "UpVote");
+            if (create == true)
             {
-            voteRepository.UpVote(id);
+                voteRepository.UpVote(id);
             }
             return RedirectToAction("Reports", "AllReport");
 
@@ -69,7 +69,7 @@ namespace nemesys_project.Controllers
         [HttpGet]
         public IActionResult DownVote(int id)
         {
-            bool create = nemesysUserVoteRepository.Add(userManager.GetUserId(User), id,"DownVote");
+            bool create = nemesysUserVoteRepository.Add(userManager.GetUserId(User), id, "DownVote");
             if (create == true)
             {
                 voteRepository.DownVote(id);
@@ -97,9 +97,7 @@ namespace nemesys_project.Controllers
 
             return View(userRepository.GetSortedUser());
         }
-
-            return View(userRepository.GetSortedUser());
-        }
+        
         [HttpGet]
         public IActionResult Maps()
         {
