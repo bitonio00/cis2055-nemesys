@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using nemesys_project.Models;
 using nemesys_project.Models.Interfaces;
 using nemesys_project.ViewModel;
+using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,14 +22,16 @@ namespace nemesys_project.Controllers
         private readonly INemesysUserRepository userRepository;
         private readonly IStatusRepository statusRepository;
         private readonly IInvestigationRepository investigationRepository;
+        private readonly IEmailService emailService;
         public ReporterSpaceController(UserManager<NemesysUser> userManager, IReportRepository reportRepository, INemesysUserRepository userRepository,
-            IStatusRepository statusRepository, IInvestigationRepository investigationRepository)
+            IStatusRepository statusRepository, IInvestigationRepository investigationRepository, IEmailService emailService)
         {
             this.userManager = userManager;
             this.reportRepository = reportRepository;
             this.userRepository = userRepository;
             this.statusRepository = statusRepository;
             this.investigationRepository = investigationRepository;
+            this.emailService = emailService;
         }
 
         // GET: ReporterSpaceController
@@ -80,7 +83,7 @@ namespace nemesys_project.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddReport([Bind("HazardLocation,Lat,Lng,HazardDate,HazardType,Description, ImageToUpload")] ReportViewModel reportModel)
+        public async Task<IActionResult> AddReport([Bind("HazardLocation,Lat,Lng,HazardDate,HazardType,Description, ImageToUpload")] ReportViewModel reportModel)
         {
             if(ModelState.IsValid)
             {
@@ -114,6 +117,11 @@ namespace nemesys_project.Controllers
 
                 };
                 reportRepository.Add(report);
+                var investigators=await userManager.GetUsersInRoleAsync("investigator");
+                foreach(var investigator in investigators)
+                {
+                    await emailService.SendAsync(investigator.Email, "A new report!!!!", $"<a>A new report have been created come Investigate it<a>", true);
+                }
                 return RedirectToAction("ManageReports", "ReporterSpace");
             }
             
@@ -122,9 +130,9 @@ namespace nemesys_project.Controllers
         [HttpGet]
         public async Task<IActionResult> ShowInvestigation(int id)
         {
-            var a = await investigationRepository.GetInvestigation(id);
-           
-           return View(a);
+            var report = await reportRepository.Find(id);
+            var investigation = await investigationRepository.GetInvestigation(report.InvestigationRefId);
+           return View(investigation);
         }
         [HttpGet]
         public async Task<IActionResult> EditReport(int id)
@@ -207,11 +215,7 @@ namespace nemesys_project.Controllers
 
 
         }
-        [HttpGet]
-        public IActionResult Maps()
-        {
-            return View();
-        }
+        
             
         // POST: ReporterSpaceController/Create
         [HttpPost]

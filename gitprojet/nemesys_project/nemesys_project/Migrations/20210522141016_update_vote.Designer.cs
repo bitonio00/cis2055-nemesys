@@ -10,8 +10,8 @@ using nemesys_project.Context;
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    [Migration("20210507153518_updat_reportsimage")]
-    partial class updat_reportsimage
+    [Migration("20210522141016_update_vote")]
+    partial class update_vote
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace nemesys_project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7545bdd3-9ee9-481b-b3e6-da1b179f747a",
-                            ConcurrencyStamp = "97eff1ca-e2a4-4e0f-a579-cc38557a6bac",
+                            Id = "bf2a62dc-0998-453b-a5b2-f3d64b4b997c",
+                            ConcurrencyStamp = "eb03a66a-7e58-4d6d-9d58-f530d0ee6839",
                             Name = "reporter",
                             NormalizedName = "REPORTER"
                         },
                         new
                         {
-                            Id = "4574e0e9-e20f-42b2-b0b6-d2f6a36cd153",
-                            ConcurrencyStamp = "bc3a3f72-68f9-4bb6-804a-50d9af777eb7",
+                            Id = "98bdb98d-6176-4a1b-bc76-93d8a5c3c4c5",
+                            ConcurrencyStamp = "9fb93a49-76c3-469b-82b6-6e00f70be280",
                             Name = "investigator",
                             NormalizedName = "INVESTIGATOR"
                         });
@@ -284,6 +284,9 @@ namespace nemesys_project.Migrations
                     b.Property<int>("VoteId")
                         .HasColumnType("int");
 
+                    b.Property<string>("TypeOfVote")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("NemesysUserId", "VoteId");
 
                     b.HasIndex("VoteId");
@@ -319,11 +322,11 @@ namespace nemesys_project.Migrations
                     b.Property<int?>("InvestigationRefId")
                         .HasColumnType("int");
 
-                    b.Property<double>("LatitudeLocation")
-                        .HasColumnType("float");
+                    b.Property<float>("LatitudeLocation")
+                        .HasColumnType("real");
 
-                    b.Property<double>("LongitudeLocation")
-                        .HasColumnType("float");
+                    b.Property<float>("LongitudeLocation")
+                        .HasColumnType("real");
 
                     b.Property<string>("ReporterRefId")
                         .HasColumnType("nvarchar(450)");

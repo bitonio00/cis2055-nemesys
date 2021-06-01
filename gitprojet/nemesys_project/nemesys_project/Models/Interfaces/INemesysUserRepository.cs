@@ -10,5 +10,7 @@ namespace nemesys_project.Models
         IEnumerable<Report> GetAllUserReports(string Id);
         IEnumerable<Investigation> GetAllUserInvestigations(string Id);
         IEnumerable<Report> GetAllReports();
+        //Alex
+        List<(string, int)> GetSortedUser();
     }
 }

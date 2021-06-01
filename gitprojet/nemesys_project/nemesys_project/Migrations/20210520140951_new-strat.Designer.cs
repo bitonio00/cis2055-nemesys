@@ -10,8 +10,8 @@ using nemesys_project.Context;
 namespace nemesys_project.Migrations
 {
     [DbContext(typeof(NemesysDbContext))]
-    [Migration("20210504190110_new_start")]
-    partial class new_start
+    [Migration("20210520140951_new-strat")]
+    partial class newstrat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace nemesys_project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a6587c09-6b7e-4110-bed1-5df6461c7784",
-                            ConcurrencyStamp = "e897ee4e-5fe6-4603-a409-79962e8c7962",
+                            Id = "8eea8b1f-fa30-49ce-bb36-2552f6571856",
+                            ConcurrencyStamp = "56c24e86-180c-4867-9eff-f8ad9597830b",
                             Name = "reporter",
                             NormalizedName = "REPORTER"
                         },
                         new
                         {
-                            Id = "dd9a6643-8bfb-4f52-b851-527d1862f1e4",
-                            ConcurrencyStamp = "b1086b55-338c-4b13-a8c4-8f541a4b9fa4",
+                            Id = "6d877312-83c5-4c24-9f48-097b2c372330",
+                            ConcurrencyStamp = "d5f188b9-7aef-4b74-9371-4ac5eb58fde8",
                             Name = "investigator",
                             NormalizedName = "INVESTIGATOR"
                         });
@@ -313,14 +313,17 @@ namespace nemesys_project.Migrations
                     b.Property<string>("HazardType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("InvestigationRefId")
                         .HasColumnType("int");
 
-                    b.Property<double>("LatitudeLocation")
-                        .HasColumnType("float");
+                    b.Property<float>("LatitudeLocation")
+                        .HasColumnType("real");
 
-                    b.Property<double>("LongitudeLocation")
-                        .HasColumnType("float");
+                    b.Property<float>("LongitudeLocation")
+                        .HasColumnType("real");
 
                     b.Property<string>("ReporterRefId")
                         .HasColumnType("nvarchar(450)");

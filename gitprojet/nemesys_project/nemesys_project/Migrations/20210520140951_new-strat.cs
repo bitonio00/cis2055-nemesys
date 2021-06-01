@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace nemesys_project.Migrations
 {
-    public partial class new_start : Migration
+    public partial class newstrat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -240,9 +240,10 @@ namespace nemesys_project.Migrations
                     HazardType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HazardLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LongitudeLocation = table.Column<double>(type: "float", nullable: false),
-                    LatitudeLocation = table.Column<double>(type: "float", nullable: false),
+                    LongitudeLocation = table.Column<float>(type: "real", nullable: false),
+                    LatitudeLocation = table.Column<float>(type: "real", nullable: false),
                     UpVote = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusRefId = table.Column<int>(type: "int", nullable: false),
                     ReporterRefId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     InvestigationRefId = table.Column<int>(type: "int", nullable: true),
@@ -282,8 +283,8 @@ namespace nemesys_project.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "a6587c09-6b7e-4110-bed1-5df6461c7784", "e897ee4e-5fe6-4603-a409-79962e8c7962", "reporter", "REPORTER" },
-                    { "dd9a6643-8bfb-4f52-b851-527d1862f1e4", "b1086b55-338c-4b13-a8c4-8f541a4b9fa4", "investigator", "INVESTIGATOR" }
+                    { "8eea8b1f-fa30-49ce-bb36-2552f6571856", "56c24e86-180c-4867-9eff-f8ad9597830b", "reporter", "REPORTER" },
+                    { "6d877312-83c5-4c24-9f48-097b2c372330", "d5f188b9-7aef-4b74-9371-4ac5eb58fde8", "investigator", "INVESTIGATOR" }
                 });
 
             migrationBuilder.InsertData(

@@ -15,6 +15,9 @@ using nemesys_project.Models;
 using Microsoft.AspNetCore.Identity;
 using nemesys_project.Models.SQLRepository;
 using nemesys_project.Models.Interfaces;
+using NETCore.MailKit;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 
 namespace nemesys_project
 {
@@ -35,7 +38,12 @@ namespace nemesys_project
             services.AddIdentity<NemesysUser, IdentityRole>(options =>
             {
                 options.Password.RequireUppercase = false;
-            }).AddEntityFrameworkStores<NemesysDbContext>();
+                options.SignIn.RequireConfirmedEmail = true;
+            }).AddEntityFrameworkStores<NemesysDbContext>().AddDefaultTokenProviders();
+            var mailKitOptions = Configuration.GetSection("Email").Get<MailKitOptions>();
+            services.AddMailKit(Configuration => Configuration.UseMailKit(mailKitOptions/*Configuration.GetSection("Email").Get<MailKitOptions>()*/));
+           
+
             services.AddControllersWithViews();
             services.AddScoped<IReportRepository, SQLReportRepository>();
             services.AddScoped<IStatusRepository, SQLStatusRepository>();

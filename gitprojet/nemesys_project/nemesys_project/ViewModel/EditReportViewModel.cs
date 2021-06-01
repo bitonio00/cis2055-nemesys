@@ -24,8 +24,8 @@ namespace nemesys_project.ViewModel
         public string StatusOfHazard { get; set; }
         public int StatusRefId { get; set; }
         public DateTime CreationDate { get; set; }
-        public double LongitudeLocation { get; set; }
-        public double LatitudeLocation { get; set; }
+        public float LongitudeLocation { get; set; }
+        public float LatitudeLocation { get; set; }
         public int UpVote { get; set; }
         public string ReporterRefId { get; set; }
         public int? InvestigationRefId { get; set; }

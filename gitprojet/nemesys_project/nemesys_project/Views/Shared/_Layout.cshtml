@@ -22,7 +22,7 @@
                         <li>@Html.ActionLink(" " + "Home", "Index", "Home")</li>
                         <li>@Html.ActionLink(" " + "Hall Of Fame", "Index", "HallOfFame")</li>
                         <li>@Html.ActionLink(" " + "Reports", "Reports", "AllReport")</li>
-                        <li>@Html.ActionLink(" " + "Maps", "Maps", "ReporterSpace")</li>
+                        <li>@Html.ActionLink(" " + "Maps", "Maps", "AllReport")</li>
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li>@Html.ActionLink(" " + "LogOut" + User.Identity.Name, "LogOut", "Account")</li>

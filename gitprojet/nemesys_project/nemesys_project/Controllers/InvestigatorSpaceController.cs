@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using nemesys_project.Models;
 using nemesys_project.Models.Interfaces;
 using nemesys_project.ViewModel;
+using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,16 @@ namespace nemesys_project.Controllers
         private readonly UserManager<NemesysUser> userManager;
         private readonly IReportRepository reportRepository;
         private readonly IInvestigationRepository investigationRepository;
+        private readonly IEmailService emailService;
 
         public InvestigatorSpaceController(INemesysUserRepository userRepository, UserManager<NemesysUser> userManager,
-            IReportRepository reportRepository, IInvestigationRepository investigationRepository)
+            IReportRepository reportRepository, IInvestigationRepository investigationRepository, IEmailService emailService)
         {
             this.userManager = userManager;
             this.userRepository = userRepository;
             this.reportRepository = reportRepository;
             this.investigationRepository = investigationRepository;
+            this.emailService = emailService;
         }
 
         // GET: InvestigatorSpace
@@ -71,7 +74,7 @@ namespace nemesys_project.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditInvestigation(EditInvestigationViewModel modelInvestigation)
+        public async Task<IActionResult> EditInvestigation(EditInvestigationViewModel modelInvestigation)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +90,10 @@ namespace nemesys_project.Controllers
                 };
                 investigationRepository.Update(investigation);
                 reportRepository.UpdateStatus(modelInvestigation.ReportRefId, modelInvestigation.StatusId);
-               // reportRepository.UpdateInvestigation(modelInvestigation.ReportRefId, modelInvestigation.InvestigationId);
+                var report = await reportRepository.Find(modelInvestigation.ReportRefId);
+                var reporter = await userManager.FindByIdAsync(report.ReporterRefId);
+                await emailService.SendAsync(reporter.Email, "Investigation have been updated on your report created on the:"+report.CreationDate, $"<a>An investigation on your Report have been updated<a>", true);
+                // reportRepository.UpdateInvestigation(modelInvestigation.ReportRefId, modelInvestigation.InvestigationId);
                 return RedirectToAction("ManageInvestigations", "InvestigatorSpace");
             }
             return View();
@@ -105,7 +111,7 @@ namespace nemesys_project.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateInvestigation(InvestigationViewModel investigationModel)
+        public async Task<IActionResult> CreateInvestigation(InvestigationViewModel investigationModel)
         {
             if(ModelState.IsValid)
             {
@@ -120,6 +126,9 @@ namespace nemesys_project.Controllers
                 investigationRepository.Add(investigation);
                 reportRepository.UpdateStatus(investigationModel.ReportId, investigationModel.StatusId);
                 reportRepository.UpdateInvestigation(investigationModel.ReportId, investigation.InvestigationId);
+                var report=await reportRepository.Find(investigationModel.ReportId);
+                var reporter = await userManager.FindByIdAsync(report.ReporterRefId);
+                await emailService.SendAsync(reporter.Email, "Investigation have been created on your report created on the:" + report.CreationDate, $"<a>An investigation on your Report have been created<a>", true);
                 return RedirectToAction("ManageInvestigations", "InvestigatorSpace");
             }
             return View(investigationModel);

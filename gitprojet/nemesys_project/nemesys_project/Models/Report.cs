@@ -17,8 +17,8 @@ namespace nemesys_project.Models
         public string HazardType { get; set; }
         public string Description { get; set; }
         public string HazardLocation { get; set; }
-        public double LongitudeLocation { get; set; }
-        public double LatitudeLocation { get; set; }
+        public float LongitudeLocation { get; set; }
+        public float LatitudeLocation { get; set; }
         public int UpVote { get; set; }
         public string ImageUrl { get; set; }
 

@@ -47,7 +47,7 @@ namespace nemesys_project.Models.SQLRepository
             return DbContext.Investigations;
         }
 
-        public async Task<Investigation> GetInvestigation(int Id)
+        public async Task<Investigation> GetInvestigation(int? Id)
         {
             var invest= await DbContext.Investigations.Include(c => c.Report).Include(c => c.Investigator).FirstOrDefaultAsync(i => i.InvestigationId == Id);
             

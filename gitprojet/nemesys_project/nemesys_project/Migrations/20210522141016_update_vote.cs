@@ -2,35 +2,35 @@
 
 namespace nemesys_project.Migrations
 {
-    public partial class updat_reportsimage : Migration
+    public partial class update_vote : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "a6587c09-6b7e-4110-bed1-5df6461c7784");
+                keyValue: "6d877312-83c5-4c24-9f48-097b2c372330");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "dd9a6643-8bfb-4f52-b851-527d1862f1e4");
+                keyValue: "8eea8b1f-fa30-49ce-bb36-2552f6571856");
 
             migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
-                table: "Reports",
+                name: "TypeOfVote",
+                table: "NemesysUserVotes",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7545bdd3-9ee9-481b-b3e6-da1b179f747a", "97eff1ca-e2a4-4e0f-a579-cc38557a6bac", "reporter", "REPORTER" });
+                values: new object[] { "bf2a62dc-0998-453b-a5b2-f3d64b4b997c", "eb03a66a-7e58-4d6d-9d58-f530d0ee6839", "reporter", "REPORTER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4574e0e9-e20f-42b2-b0b6-d2f6a36cd153", "bc3a3f72-68f9-4bb6-804a-50d9af777eb7", "investigator", "INVESTIGATOR" });
+                values: new object[] { "98bdb98d-6176-4a1b-bc76-93d8a5c3c4c5", "9fb93a49-76c3-469b-82b6-6e00f70be280", "investigator", "INVESTIGATOR" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -38,26 +38,26 @@ namespace nemesys_project.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "4574e0e9-e20f-42b2-b0b6-d2f6a36cd153");
+                keyValue: "98bdb98d-6176-4a1b-bc76-93d8a5c3c4c5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "7545bdd3-9ee9-481b-b3e6-da1b179f747a");
+                keyValue: "bf2a62dc-0998-453b-a5b2-f3d64b4b997c");
 
             migrationBuilder.DropColumn(
-                name: "ImageUrl",
-                table: "Reports");
+                name: "TypeOfVote",
+                table: "NemesysUserVotes");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a6587c09-6b7e-4110-bed1-5df6461c7784", "e897ee4e-5fe6-4603-a409-79962e8c7962", "reporter", "REPORTER" });
+                values: new object[] { "8eea8b1f-fa30-49ce-bb36-2552f6571856", "56c24e86-180c-4867-9eff-f8ad9597830b", "reporter", "REPORTER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "dd9a6643-8bfb-4f52-b851-527d1862f1e4", "b1086b55-338c-4b13-a8c4-8f541a4b9fa4", "investigator", "INVESTIGATOR" });
+                values: new object[] { "6d877312-83c5-4c24-9f48-097b2c372330", "d5f188b9-7aef-4b74-9371-4ac5eb58fde8", "investigator", "INVESTIGATOR" });
         }
     }
 }

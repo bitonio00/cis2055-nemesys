@@ -7,7 +7,7 @@ namespace nemesys_project.Models.Interfaces
 {
     public interface IInvestigationRepository
     {
-        Task<Investigation> GetInvestigation(int Id);
+        Task<Investigation> GetInvestigation(int? Id);
         IEnumerable<Investigation> GetAllInvestigation();
         Investigation Add(Investigation investigation);
         Investigation Update(Investigation investigationChanges);
