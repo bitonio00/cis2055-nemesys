@@ -21,7 +21,7 @@ namespace nemesys_project.Controllers
         private readonly INemesysUserVoteRepository nemesysUserVoteRepository;
 
 
-        public AllReportController(INemesysUserRepository userRepository, UserManager<NemesysUser> userManager, 
+        public AllReportController(INemesysUserRepository userRepository, UserManager<NemesysUser> userManager,
             IReportRepository reportRepository, IInvestigationRepository investigationRepository, IVoteRepository voteRepository,
             INemesysUserVoteRepository nemesysUserVoteRepository)
         {
@@ -37,10 +37,10 @@ namespace nemesys_project.Controllers
         {
             return View();
         }
-      
+
         public IActionResult Reports()
         {
-         
+
             return View(reportRepository.GetAllReports());
         }
 
@@ -56,7 +56,7 @@ namespace nemesys_project.Controllers
         public IActionResult UpVote(int id)
         {
 
-           
+
             bool create=nemesysUserVoteRepository.Add(userManager.GetUserId(User), id,"UpVote");
             if(create==true)
             {
@@ -90,16 +90,20 @@ namespace nemesys_project.Controllers
         {
             return View();
         }
-        //HAF
+        //HAF ALex
+        //commentaire en plus jsais pas pq
         public IActionResult HallOfFame()
         {
+
+            return View(userRepository.GetSortedUser());
+        }
 
             return View(userRepository.GetSortedUser());
         }
         [HttpGet]
         public IActionResult Maps()
         {
-            
+
             return View(reportRepository.GetAllReports());
         }
         // POST: AllReportController/Create
