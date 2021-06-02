@@ -14,6 +14,10 @@
         if(@report.Reporter!=null)
                     {
 <div class="card mb-3">
+    @if (report.ImageUrl != null)
+    {
+        <img class="card-img-top" src="@report.ImageUrl">
+    }
     <div class="card-header">
         Report Date @report.CreationDate
     </div>

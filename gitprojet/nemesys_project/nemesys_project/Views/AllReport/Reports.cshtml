@@ -18,37 +18,41 @@
 
     foreach (var report in Model)
     {
-        <div class="card mb-3">
-            <div class="card-header">
-                Report Date @report.CreationDate Vote:@if (report.Vote != null)
-                {  @report.Vote.Score }
-            </div>
-            <div class="card-body">
-                Hazard Location : @report.HazardLocation <br />
-                Hazard Type : @report.HazardType <br />
-                Date of the Hazard : @report.HazardDate <br />
-                Description : @report.Description <br />
-                Status : @report.Status.StatusOfReport <br />
-                Reporter Email : @report.Reporter.Email <br />
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-primary"
-                   asp-action="UpVote" asp-controller="AllReport" asp-route-id="@report.ReportId">
-                    UpVote
-                </a>
-                <a class="btn btn-primary"
-                   asp-action="DownVote" asp-controller="AllReport" asp-route-id="@report.ReportId">
-                    DownVote
-                </a>
-                @if (report.InvestigationRefId != null)
-                {
-                    <a class="btn btn-primary"
-                       asp-action="ShowInvestigation" asp-controller="AllReport" asp-route-id="@report.ReportId">
-                        Show Investigation
-                    </a>
-                }
-            </div>
-        </div>
+<div class="card mb-3">
+    @if (report.ImageUrl != null)
+    {
+        <img class="card-img-top" src="@report.ImageUrl">
+    }
+    <div class="card-header">
+        Report Date @report.CreationDate Vote:@if (report.Vote != null)
+        {@report.Vote.Score}
+    </div>
+    <div class="card-body">
+        Hazard Location : @report.HazardLocation <br />
+        Hazard Type : @report.HazardType <br />
+        Date of the Hazard : @report.HazardDate <br />
+        Description : @report.Description <br />
+        Status : @report.Status.StatusOfReport <br />
+        Reporter Email : @report.Reporter.Email <br />
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-primary"
+           asp-action="UpVote" asp-controller="AllReport" asp-route-id="@report.ReportId">
+            UpVote
+        </a>
+        <a class="btn btn-primary"
+           asp-action="DownVote" asp-controller="AllReport" asp-route-id="@report.ReportId">
+            DownVote
+        </a>
+        @if (report.InvestigationRefId != null)
+        {
+            <a class="btn btn-primary"
+               asp-action="ShowInvestigation" asp-controller="AllReport" asp-route-id="@report.ReportId">
+                Show Investigation
+            </a>
+        }
+    </div>
+</div>
     }
 
 }
