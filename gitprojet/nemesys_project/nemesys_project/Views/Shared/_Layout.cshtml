@@ -7,42 +7,69 @@
     <title>@ViewData["Title"] - Nemesys</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        
+    </style>
+   
+    <link href="~/css/carousel.css" rel="stylesheet" />
+    <link href="~/css/navbar.css" rel="stylesheet" />
+    <!--Bootstrap CDN-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 </head>
 <body>
+   
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark text-white p-3">
+            <div class="container-fluid">
+
+                @Html.ActionLink("Nemesys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-white" })
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("Nemesys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <div class="navbar-collapse">
-                    <ul class="nav">
-                        <li>@Html.ActionLink(" " + "Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink(" " + "Hall Of Fame", "HallOfFame", "AllReport")</li>
-                        <li>@Html.ActionLink(" " + "Reports", "Reports", "AllReport")</li>
-                        <li>@Html.ActionLink(" " + "Maps", "Maps", "AllReport")</li>
-                        @if (signInManager.IsSignedIn(User))
-                        {
-                            <li>@Html.ActionLink(" " + "LogOut" + User.Identity.Name, "LogOut", "Account")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("Register", "Register", "Account")</li>
-                            <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
 
-                        }
-                        @if (signInManager.IsSignedIn(User) && User.IsInRole("reporter"))
-                        {
-                            <li>@Html.ActionLink(" " + "My Space", "ManageReports", "ReporterSpace")</li>
-                        }
-                        else if (signInManager.IsSignedIn(User) && User.IsInRole("investigator"))
-                        {
-                            <li>@Html.ActionLink(" " + "My Space", "ManageInvestigations", "InvestigatorSpace")</li>
-                        }
-
+                    <ul class="navbar-nav  me-auto mb-2  mb-md-0">
+                        <li class="nav-item">@Html.ActionLink(" " + "Home", "Index", "Home", new { area = "" }, new { @class = "bi bi-house nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink(" " + "Hall Of Fame", "HallOfFame", "AllReport", new { area = "" }, new { @class = "bi bi-trophy nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink(" " + "Reports", "Reports", "AllReport", new { area = "" }, new { @class = "bi bi-flag nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink(" " + "Maps", "Maps", "AllReport", new { area = "" }, new { @class = "bi bi-map nav-link" })</li>
                     </ul>
+
+                    <div class="text-end">
+                        <ul class="nav me-auto mb-2 mb-md-0">
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">@Html.ActionLink(" " + "LogOut" + User.Identity.Name, "LogOut", "Account", new { area = "" }, new { @class = "" })</li>
+                            }
+                            else
+                            {
+
+                                <li class="nav-item">@Html.ActionLink(" Login", "Login", "Account", new { area = "" }, new { @class = "bi bi-box-arrow-in-right btn btn-outline-light me-2" })</li>
+                                <li class="nav-item">@Html.ActionLink(" Register", "Register", "Account", new { area = "" }, new { @class = "bi bi-person-plus-fill btn btn-warning" })</li>
+
+                            }
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("reporter"))
+                            {
+                                <li class="nav-item">@Html.ActionLink(" " + "My Space", "ManageReports", "ReporterSpace", new { area = "" }, new { @class = "" })</li>
+                            }
+                            else if (signInManager.IsSignedIn(User) && User.IsInRole("investigator"))
+                            {
+                                <li class="nav-item">@Html.ActionLink(" " + "My Space", "ManageInvestigations", "InvestigatorSpace", new { area = "" }, new { @class = "" })</li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -50,6 +77,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+
         </main>
     </div>
 
