@@ -1,68 +1,137 @@
-﻿@model   RegisterViewModel
+﻿@model RegisterViewModel
 
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
 
-<h1>User Registration</h1>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+    </style>
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+    <!-- Custom styles for this template -->
+    <link href="~/css/register.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <main>
+            <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="https://i.ibb.co/ZRrw99X/NEMESYS-2.jpg" alt="NEMESYS-2" border="0" width="72" height="72">
+                <h2>Registration Form</h2>
+                <p class="lead">By registering on NEMESYS, you contribute in all simplicity to the well-being and safety of all by reporting the problems you notice !</p>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class=" radio">
-                    <label asp-for=" IsInvestigator">
-                        <input asp-for="IsInvestigator" />
-                        @Html.DisplayFor(m => m.IsInvestigator)
-                        Are you a Investigator ?
-                    </label>
+
+            <div class="row g-5">
+                <!--Cadre de gauche-->
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3">Personal informations</h4>
+                    <form class="needs-validation" novalidate method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row g-3">
+                            <div class="col-sm-6 form-group">
+                                <label asp-for="FirstName" class="control-label">First name</label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Tarek" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label asp-for="LastName" class="control-label">Last name</label>
+                                <input asp-for="LastName" class="form-control" placeholder="Moulekaf" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <!--Username option
+            <div class="col-12">
+                <label for="username" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text">#</span>
+                    <input type="text" class="form-control" id="username" placeholder="La loutre" required>
                 </div>
             </div>
-            <div class="form-group">
-                <div class=" checkbox">
-                    <label asp-for=" IsReporter">
-                        <input asp-for="IsReporter" />
-                        @Html.DisplayFor(m => m.IsReporter)
-                        Are you a Reporter ?
-                    </label>
+        -->
+
+                            <div class="col-12 form-group">
+                                <label asp-for="PhoneNumber" class="control-label">Phone number </label>
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="0647274655" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 form-group">
+                                <label asp-for="Email" class="control-label">Email </label>
+                                <input asp-for="Email" class="form-control" placeholder="you@example.com" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 form-group">
+                                <label asp-for="Password" class="control-label ">Password </label>
+                                <input asp-for="Password" class="form-control" placeholder="Mypassword" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 form-group">
+                                <label asp-for="ConfirmPassword" class="control-label ">Confirm Password </label>
+                                <input asp-for="ConfirmPassword" class="form-control" placeholder="MypasswordConfirmed" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        <!--
+        <h4 class="mb-3">Are you :</h4>
+        <div class="my-3">
+            <div class="form-check">
+                <label asp-for="IsInvestigator" class="form-check-label" for="exampleRadios1">
+                    <input asp-for="IsInvestigator" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked />
+                    an Investigator ?
+                </label>
+            </div>
+            <div class="form-check">
+                <label asp-for="IsReporter" class="form-check-label" for="exampleRadios2">
+                    <input asp-for="IsReporter" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" />
+                    a Reporter ?
+                </label>
+            </div>
+        </div>
+    -->
+                        <h4 class="mb-3">Are you :</h4>
+                        <div class="my-3">
+                            <div class="form-group">
+                                <label asp-for=" IsReporter">
+                                    <input asp-for="IsReporter" />
+                                    a Reporter ?
+                                </label>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for=" IsInvestigator">
+                                    <input asp-for="IsInvestigator" />
+                                    an Investigator ?
+                                </label>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-dark btn-lg" type="submit">Register</button>
+                    </form>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+            
+</main>
     </div>
-</div>
-
+</body>
+</html>
