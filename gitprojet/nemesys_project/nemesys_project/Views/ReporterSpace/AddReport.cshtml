@@ -19,24 +19,18 @@
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>
             <div class="card-block" id="formatted-address"></div>
-            <div class="card-block" id="address-location"></div>
         </div>
         <form asp-action="AddReport" method="post" role="form" enctype="multipart/form-data">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="HazardLocation" class="control-label">Confirm Full Hazard Location</label>
-                <input asp-for="HazardLocation" class="form-control" />
-                <span asp-validation-for="HazardLocation" class="text-danger"></span>
+                <input asp-for="Lng" class="form-control" id="longitude" hidden />
             </div>
             <div class="form-group">
-                <label asp-for="Lat" class="control-label">Confirm Latitude:</label>
-                <input asp-for="Lat" class="form-control" />
-                <span asp-validation-for="Lat" class="text-danger"></span>
+                <input asp-for="Lat" class="form-control" id="latitude" hidden />
             </div>
             <div class="form-group">
-                <label asp-for="Lng" class="control-label">Confirm Longitude</label>
-                <input asp-for="Lng" class="form-control" />
-                <span asp-validation-for="Lng" class="text-danger"></span>
+                <input asp-for="HazardLocation" class="form-control" id="formattedAddress" hidden />
             </div>
             <div class="form-group">
                 <label asp-for="HazardDate" class="control-label"></label>
@@ -93,6 +87,9 @@
             var addressComponents = response.data.results[0].address_components;
             var lat = response.data.results[0].geometry.location.lat;
             var lng = response.data.results[0].geometry.location.lng;
+            $("#latitude").val(lat);
+            $("#longitude").val(lng);
+            $("#formattedAddress").val(formattedAddress);
             var geometryOutput = `
                         <ul class="list-group">
                             <li class="list-group-item"><strong>Latitude</strong>:${lat}</li>
@@ -109,6 +106,9 @@
             document.getElementById('formatted-address').innerHTML = formattedAddress;
           //  document.getElementById('address-components').innerHTML = addressComponentsOutput;
             document.getElementById('address-location').innerHTML = geometryOutput;
+            console.log(lat);
+            console.log(lng);
+
 
         }).catch(function (error) {
             console.log(error);

@@ -100,6 +100,9 @@ namespace nemesys_project.Controllers
                         reportModel.ImageToUpload.CopyTo(bits);
                     }
                 }
+                
+                float lat= float.Parse(reportModel.Lat.Replace(".",",")); 
+                float lng= float.Parse(reportModel.Lng.Replace(".", ","));
                 var id = userManager.GetUserId(User);
                 var report = new Report
                 {
@@ -111,8 +114,8 @@ namespace nemesys_project.Controllers
                     UpVote = 0,
                     StatusRefId = 1,
                     ReporterRefId =id,
-                    LatitudeLocation =reportModel.Lat,
-                    LongitudeLocation = reportModel.Lng,
+                    LatitudeLocation =lat,
+                    LongitudeLocation = lng,
                     ImageUrl = "/images/reports/" + fileName,
 
                 };

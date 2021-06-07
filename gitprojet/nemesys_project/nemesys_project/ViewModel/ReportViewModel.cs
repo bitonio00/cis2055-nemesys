@@ -20,9 +20,8 @@ namespace nemesys_project.ViewModel
 
         [Required(ErrorMessage = "The location of the hazard is required")]
         public string HazardLocation { get; set; }
-        public float Lat { get; set; }
-
-        public float Lng { get; set; }
+        public string Lat { get; set; }
+        public string Lng { get; set; }
         public string ImageUrl { get; set; }
         public IFormFile ImageToUpload { get; set; } //used only when submitting form
 
