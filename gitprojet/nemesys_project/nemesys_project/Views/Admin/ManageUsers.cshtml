@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NemesysUser>
+@{
+    ViewData["Title"] = "ManageUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ManageUsers</h1>
+
+@if (Model.Any())
+{
+
+    foreach (var user in Model)
+    {
+        @if (user.Email.Equals("admin@gmail.com")==false)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    email @user.UserName
+                </div>
+                <div class="card-body">
+                    First name : @user.FirstName <br />
+                    Last name : @user.LastName <br />
+                    phone:@user.PhoneNumber <br />
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-danger"
+                       asp-action="DeleteUser" asp-controller="Admin" asp-route-id="@user.Id">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        }
+
+    }
+
+}
+else
+{
+    <a class="btn btn-primary">
+        No Users
+    </a>
+}

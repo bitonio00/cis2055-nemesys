@@ -48,15 +48,22 @@ namespace nemesys_project.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bf2a62dc-0998-453b-a5b2-f3d64b4b997c",
-                            ConcurrencyStamp = "eb03a66a-7e58-4d6d-9d58-f530d0ee6839",
+                            Id = "7e33859e-d3ac-400e-b593-31f7009e3266",
+                            ConcurrencyStamp = "cbd4d7aa-efee-4fed-a188-6ce901004a6c",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "413e014c-d14a-43b3-87c5-bf37478518bd",
+                            ConcurrencyStamp = "0cd85222-db4d-4d9e-8ee2-e464e14346ba",
                             Name = "reporter",
                             NormalizedName = "REPORTER"
                         },
                         new
                         {
-                            Id = "98bdb98d-6176-4a1b-bc76-93d8a5c3c4c5",
-                            ConcurrencyStamp = "9fb93a49-76c3-469b-82b6-6e00f70be280",
+                            Id = "d1cbd8d4-8366-497d-98c1-d47225faff8d",
+                            ConcurrencyStamp = "a44d2e17-cb23-4590-86fc-1e61712f4dbe",
                             Name = "investigator",
                             NormalizedName = "INVESTIGATOR"
                         });
@@ -145,6 +152,13 @@ namespace nemesys_project.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            RoleId = "7e33859e-d3ac-400e-b593-31f7009e3266"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -272,6 +286,25 @@ namespace nemesys_project.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "21a89bc1-f643-442f-91e7-3eb4a8856f47",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAECc6xmRXwap9Fa2suIc6rt+CpAE3q8etuWVpiAlCQgoeff7NqZKsmqSBdfEe6JZaeg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            Upvote = 0,
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("nemesys_project.Models.NemesysUserVote", b =>

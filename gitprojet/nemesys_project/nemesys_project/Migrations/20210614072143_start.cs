@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace nemesys_project.Migrations
 {
-    public partial class newstrat : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -186,7 +186,8 @@ namespace nemesys_project.Migrations
                 columns: table => new
                 {
                     NemesysUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    VoteId = table.Column<int>(type: "int", nullable: false)
+                    VoteId = table.Column<int>(type: "int", nullable: false),
+                    TypeOfVote = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,9 +284,15 @@ namespace nemesys_project.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8eea8b1f-fa30-49ce-bb36-2552f6571856", "56c24e86-180c-4867-9eff-f8ad9597830b", "reporter", "REPORTER" },
-                    { "6d877312-83c5-4c24-9f48-097b2c372330", "d5f188b9-7aef-4b74-9371-4ac5eb58fde8", "investigator", "INVESTIGATOR" }
+                    { "7e33859e-d3ac-400e-b593-31f7009e3266", "cbd4d7aa-efee-4fed-a188-6ce901004a6c", "admin", "ADMIN" },
+                    { "413e014c-d14a-43b3-87c5-bf37478518bd", "0cd85222-db4d-4d9e-8ee2-e464e14346ba", "reporter", "REPORTER" },
+                    { "d1cbd8d4-8366-497d-98c1-d47225faff8d", "a44d2e17-cb23-4590-86fc-1e61712f4dbe", "investigator", "INVESTIGATOR" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "Upvote", "UserName" },
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "21a89bc1-f643-442f-91e7-3eb4a8856f47", "admin@gmail.com", true, null, null, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAECc6xmRXwap9Fa2suIc6rt+CpAE3q8etuWVpiAlCQgoeff7NqZKsmqSBdfEe6JZaeg==", null, false, "", false, 0, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Status",
@@ -297,6 +304,11 @@ namespace nemesys_project.Migrations
                     { 3, "no action required" },
                     { 4, "being investigated" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "7e33859e-d3ac-400e-b593-31f7009e3266", "a18be9c0-aa65-4af8-bd17-00bd9344e575" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

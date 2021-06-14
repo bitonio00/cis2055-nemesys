@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using nemesys_project.Models;
 using nemesys_project.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace nemesys_project.Controllers
     public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly INemesysUserRepository userManager;
         // GET: AdminController
-        public AdminController(RoleManager<IdentityRole>roleManager)
+        public AdminController(RoleManager<IdentityRole>roleManager, INemesysUserRepository userManager)
         {
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
         [HttpGet]
         public IActionResult AddRole()
@@ -52,6 +55,19 @@ namespace nemesys_project.Controllers
         {
             return View(roleManager.Roles);
             
+        }
+        public IActionResult ManageUsers()
+        {
+            return View(userManager.GetAllUsers());
+        }
+        [HttpGet]
+        public IActionResult DeleteUser(string id)
+        {
+
+            userManager.Delete(id);
+            return RedirectToAction("ManageUsers", "Admin");
+
+
         }
         public ActionResult Index()
         {

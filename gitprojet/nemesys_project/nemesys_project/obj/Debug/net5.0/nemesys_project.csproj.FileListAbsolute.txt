@@ -140,7 +140,6 @@ C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\D
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\AddRole.cshtml.g.cs
-C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\ListRoles.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\AllReport\HallOfFame.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\AllReport\Reports.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\AllReport\ShowInvestigation.cshtml.g.cs
@@ -356,3 +355,5 @@ C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesy
 C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\ref\nemesys_project.dll
 C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\nemesys_project.pdb
 C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\nemesys_project.genruntimeconfig.cache
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\ListRoles.cshtml.g.cs
+C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\ManageUsers.cshtml.g.cs

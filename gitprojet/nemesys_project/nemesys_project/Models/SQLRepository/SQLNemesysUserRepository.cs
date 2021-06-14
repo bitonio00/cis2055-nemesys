@@ -32,9 +32,27 @@ namespace nemesys_project.Models.SQLRepository
 
             return userMessages;
         }
+        public IEnumerable<NemesysUser> GetAllUsers()
+        {
+            var users = DbContext.Users;
+            return users;
+        }
         public IEnumerable<Report> GetAllReports()
         {
             return DbContext.Reports;
+        }
+        public void Delete(string id)
+        {
+           var user= DbContext.Users.Find(id);
+            if (user != null)
+            {
+             foreach(var report in GetAllUserReports(id))
+                {
+                    DbContext.Reports.Remove(report);
+                }
+                DbContext.Users.Remove(user);
+                DbContext.SaveChanges();
+            }
         }
         //Alex
         public List<(string, int)> GetSortedUser()

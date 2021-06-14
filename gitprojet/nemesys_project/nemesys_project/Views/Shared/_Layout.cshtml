@@ -56,6 +56,10 @@
                             {
                                 <li class="nav-item">@Html.ActionLink(" " + "My Space", "ManageInvestigations", "InvestigatorSpace", new { area = "" }, new { @class = "bi bi-person-circle btn btn-warning" })</li>
                             }
+                            else if (signInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">@Html.ActionLink(" " + "My Space", "ManageUsers", "Admin", new { area = "" }, new { @class = "bi bi-person-circle btn btn-warning" })</li>
+                            }
                         </ul>
                     </div>
                 </div>
