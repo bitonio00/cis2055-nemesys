@@ -71,7 +71,7 @@ using Microsoft.AspNetCore.Identity;
         {
 #nullable restore
 #line 2 "C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\Views\AllReport\Maps.cshtml"
-  
+
     ViewData["Title"] = "Maps";
     Layout = "~/Views/Shared/_Layout.cshtml";
 

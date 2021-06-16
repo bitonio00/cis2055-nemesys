@@ -4,5 +4,45 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Thank you for verifying your email please login here </h1>
-<a href="/Account/Login">Go to Login</a>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VerifyEmail</title>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+    <!-- StyleSheet-->
+    <link href="~/css/component.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-light">
+   
+    <div class="bd-cheatsheet container-fluid bg-body">
+        <section id="components">
+            <article class="my-4" id="alerts">
+                <div class="bd-example">
+                    <h1>Email Verification</h1>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Thanks for verifying your email address!</h4>
+                        <p>You can now log in with the link below.</p>
+                        <hr>
+                        <p class="mb-0"><a href="/Account/Login">Go to Login</a></p>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+
+</body>
+
+</html>
