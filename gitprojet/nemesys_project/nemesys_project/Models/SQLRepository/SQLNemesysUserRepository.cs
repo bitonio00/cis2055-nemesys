@@ -76,7 +76,12 @@ namespace nemesys_project.Models.SQLRepository
 
             return list;
         }
-        
-        
+
+        public void Update(NemesysUser userChanges)
+        {
+            var user = DbContext.Users.Attach(userChanges);
+            user.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            DbContext.SaveChanges();
+        }
     }
 }

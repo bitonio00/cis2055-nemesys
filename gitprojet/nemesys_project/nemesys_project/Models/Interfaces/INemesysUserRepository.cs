@@ -14,5 +14,6 @@ namespace nemesys_project.Models
         void Delete(string id);
         //Alex
         List<(string, int)> GetSortedUser();
+        void Update(NemesysUser userChanges);
     }
 }

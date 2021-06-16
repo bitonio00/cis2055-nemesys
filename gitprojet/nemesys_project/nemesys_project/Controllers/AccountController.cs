@@ -17,15 +17,17 @@ namespace nemesys_project.Controllers
         private readonly SignInManager<NemesysUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IEmailService emailService;
+        private readonly INemesysUserRepository userRepository;
 
         public AccountController(UserManager<NemesysUser>userManager,
             SignInManager<NemesysUser>signInManager, RoleManager<IdentityRole> roleManager,
-            IEmailService emailService)
+            IEmailService emailService, INemesysUserRepository userRepository)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
             this.emailService = emailService;
+            this.userRepository = userRepository;
         }
         
         public IActionResult Index()
@@ -90,6 +92,18 @@ namespace nemesys_project.Controllers
             }
             return View(usr);
         }
+        [HttpGet]
+        public async Task<IActionResult> AccountParameter()
+        {
+            var a =await userManager.GetUserAsync(User);
+            return View(a);
+        }
+        [HttpPost]
+        public IActionResult AccountParameter(NemesysUser user)
+        {
+            userRepository.Update(user);
+            return RedirectToAction("Index", "Home");
+        }
         [HttpPost]
         public async Task<IActionResult>ForgotPassword(ForgotPasswordViewModel model)
         {
@@ -114,10 +128,37 @@ namespace nemesys_project.Controllers
             
             return View();
         }
+        public IActionResult Parameters()
+        {
+            return View();
+        }
         public IActionResult ForgotPassword()
         {
                    return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            
+            var user = await userManager.GetUserAsync(User);
+            var changePasswordResult = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                foreach (var error in changePasswordResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View();
+            }
+            await signInManager.RefreshSignInAsync(user);
+            return RedirectToAction("Index", "Home");
+        }
+        
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult>ResetPassword(string userId,string code,ResetPasswordViewModel model)
         {
