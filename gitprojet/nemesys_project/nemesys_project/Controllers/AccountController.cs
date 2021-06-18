@@ -67,6 +67,10 @@ namespace nemesys_project.Controllers
                 {
                     roleName = "investigator";
                 }
+                else if(usr.IsInvestigator==true && usr.IsReporter==true)
+                {
+                    roleName = "reporter";
+                }
                 var result= await userManager.CreateAsync(user, usr.Password);
                 if(result.Succeeded)
                 {
