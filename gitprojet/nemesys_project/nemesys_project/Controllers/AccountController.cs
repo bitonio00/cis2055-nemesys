@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using nemesys_project.Models;
@@ -47,7 +48,7 @@ namespace nemesys_project.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel usr)
         {
-           // IdentityResult result2 = null;
+         
 
             if (ModelState.IsValid)
             {
@@ -74,11 +75,6 @@ namespace nemesys_project.Controllers
                     await emailService.SendAsync(user.Email,"email verify",$"<a href=\"{link}\">Verify Email<a>",true);
                     return RedirectToAction("EmailVerification");
 
-                   /*await signInManager.SignInAsync(user, isPersistent: false);
-                   var role = await roleManager.FindByNameAsync(roleName);
-                   var reporterUser = await userManager.FindByEmailAsync(usr.Email);
-                   IdentityResult result2 = await userManager.AddToRoleAsync(reporterUser, role.Name);
-                    return RedirectToAction("Index","Home");*/
                 }
                 foreach(var error in result.Errors)
                 {
@@ -92,12 +88,14 @@ namespace nemesys_project.Controllers
             }
             return View(usr);
         }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> AccountParameter()
         {
             var a =await userManager.GetUserAsync(User);
             return View(a);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult AccountParameter(NemesysUser user)
         {
@@ -128,6 +126,7 @@ namespace nemesys_project.Controllers
             
             return View();
         }
+        [Authorize]
         public IActionResult Parameters()
         {
             return View();
@@ -136,6 +135,7 @@ namespace nemesys_project.Controllers
         {
                    return View();
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -153,7 +153,7 @@ namespace nemesys_project.Controllers
             await signInManager.RefreshSignInAsync(user);
             return RedirectToAction("Index", "Home");
         }
-        
+        [Authorize]
         public IActionResult ChangePassword()
         {
             return View();

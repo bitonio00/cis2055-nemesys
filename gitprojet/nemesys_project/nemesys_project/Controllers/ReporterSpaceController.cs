@@ -168,8 +168,7 @@ namespace nemesys_project.Controllers
         [HttpPost]
         public IActionResult EditReport(EditReportViewModel modelReport)
         {
-            //var report2 = await reportRepository.Find(modelReport.Id);
-            //DateTime b = report2.CreationDate;
+            
             if (ModelState.IsValid)
             {
                 string fileName = "";
