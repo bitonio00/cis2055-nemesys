@@ -5,49 +5,126 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ManageReports</h1>
-@if (Model.Any())
-{
+<html lang="en">
+<head>
 
-    foreach (var report in Model)
-    {
-        if(@report.Reporter!=null)
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChooseReport</title>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            width: 100%;
+            height: 225px;
+        }
+    </style>
+
+</head>
+<body>
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Creation of investigations</h1>
+                    <p class="lead text-muted">You are in your personal space.</p>
+                    <br />
+                    <p class="lead text-muted"><strong>To create an investigation, simply choose one of the reports below.</strong></p>
+                    <a class="btn btn-warning my-2 btn-lg w-100" style="width:auto" asp-action="ManageInvestigations"
+                       asp-controller="InvestigatorSpace">Cancel</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    @if (Model.Any())
                     {
-<div class="card mb-3">
-    @if (report.ImageUrl != null)
-    {
-        <img class="card-img-top" src="@report.ImageUrl">
-    }
-    <div class="card-header">
-        Report Date @report.CreationDate
-    </div>
-    <div class="card-body">
-        Hazard Location : @report.HazardLocation <br />
-        Hazard Type : @report.HazardType <br />
-        Date of the Hazard : @report.HazardDate <br />
-        Description : @report.Description <br />
-        Status : @report.Status.StatusOfReport <br />
-        Reporter Mail : @report.Reporter.Email <br />
-        Reporter Mobile : @report.Reporter.PhoneNumber <br />
-    </div>
-    <div class="card-footer">
-        <a class="btn btn-primary"
-           asp-action="CreateInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@report.ReportId">
-            Create Investigation
-        </a>
-    </div>
-</div>
-                    }
-        
-    }
 
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            You have no reports yet
+                        foreach (var report in Model)
+                        {
+
+                            if (@report.Reporter != null)
+                            {
+                                <div class="col">
+                                    <div class="card shadow-sm">
+
+
+                                        @if (report.ImageUrl != null)
+                                        {
+                                            <img src="@report.ImageUrl" class="bd-placeholder-img card-img-top" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        }
+                                        else
+                                        {
+                                            <img src="https://i.ibb.co/cxHpT46/Image-manquante-2-svg.jpg" class="bd-placeholder-img card-img-top" alt="Image-manquante-2-svg" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        }
+
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <small class="text-muted text-right">Report Date : @report.CreationDate</small>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <strong>Hazard Location :</strong> @report.HazardLocation <br />
+                                                <strong>Hazard Type :</strong> @report.HazardType <br />
+                                                <strong>Date of the Hazard :</strong> @report.HazardDate <br />
+                                                <strong>Description :</strong> @report.Description <br />
+                                                <strong>Status :</strong> @report.Status.StatusOfReport <br />
+                                                <strong>Reporter Mail :</strong> @report.Reporter.Email <br />
+                                                <strong>Reporter Mobile :</strong> @report.Reporter.PhoneNumber <br />
+                                            </p>
+
+
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="btn-group">
+                                                    <a class="btn btn-sm btn-warning"
+                                                       asp-action="CreateInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@report.ReportId">
+                                                        Create Investigation
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                        }
+
+                    }
+
+                    else
+                    {
+                <section class="py-5 text-center container mt-5">
+                    <div class="row py-lg-5">
+                        <div class="col-lg-6 col-md-8 mx-auto">
+                            <div class="card bg-dark text-white">
+                                <div class="card-header fw-light">
+                                    There are no reports yet.
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-3 fw-light">
+                                        You therefore cannot create investigations
+                                    </h5>
+                                    <a class="btn btn-warning" style="width:auto" asp-controller="InvestigatorSpace" asp-action="ManageInvestigations">
+                                        Go back
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                    }
+
+                </div>
+            </div>
         </div>
-        </div>
-       
-}
+    </main>
+</body>
+</html>

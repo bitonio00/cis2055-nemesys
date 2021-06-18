@@ -5,60 +5,130 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ManageInvestigations</h1>
-@if (Model.Any())
-{
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="ChooseReport"
-       asp-controller="InvestigatorSpace">Add New Investigation</a>
+<html lang="en">
+<head>
 
-    foreach (var investigation in Model)
-    {
-<div class="card mb-3">
-    @if (investigation.Report.ImageUrl != null)
-    {
-        <img class="card-img-top" src="@investigation.Report.ImageUrl">
-    }
-    <div class="card-header">
-        Date of Investigation @investigation.DateOfCreation
-    </div>
-    <div class="card-body">
-        Description of Investigation : @investigation.Description<br />
-        Hazard Place : @investigation.Report.HazardLocation <br />
-        Description of Hazard : @investigation.Report.Description <br />
-        Date of the Hazard : @investigation.Report.HazardDate <br />
-        Description of Investigation : @investigation.Description <br />
-        Date of Action : @investigation.DateOfAction <br />
-        Status of Report : @investigation.Report.Status.StatusOfReport <br />
-        email of the Reporter : @investigation.Report.Reporter.Email <br />
-        mobile of the Reporter: @investigation.Report.Reporter.PhoneNumber <br />
-    </div>
-    <div class="card-footer">
-        <a class="btn btn-primary"
-           asp-action="EditInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@investigation.InvestigationId">
-            Edit
-        </a>
-        <a class="btn btn-danger"
-           asp-action="DeleteInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@investigation.InvestigationId">
-            Delete
-        </a>
-    </div>
-</div>
-    }
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            You have no Investigations yet
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to create a Investigation
-            </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="InvestigatorSpace" asp-action="ChooseReport">
-                Create Investigation
-            </a>
-        </div>
-    </div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ManageInvestigations</title>
 
-}
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            width: 100%;
+            height: 225px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">My space & My investigations</h1>
+                    <p class="lead text-muted">You are in your personal space.</p>
+                    <br />
+                    <p class="lead text-muted">This is where it happens if you want to <strong>view, edit, delete or add</strong> other investigations.</p>
+                    <a class="btn btn-warning my-2 btn-lg w-100" style="width:auto" asp-action="ChooseReport"
+                       asp-controller="InvestigatorSpace">Add New Investigation</a>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    @if (Model.Any())
+                    {
+
+                        foreach (var investigation in Model)
+                        {
+
+                            <div class="col">
+                                <div class="card shadow-sm">
+
+                                    @if (investigation.Report.ImageUrl != null)
+                                    {
+                                        <img src="@investigation.Report.ImageUrl" class="bd-placeholder-img card-img-top" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    }
+                                    else
+                                    {
+                                        <img src="https://i.ibb.co/cxHpT46/Image-manquante-2-svg.jpg" class="bd-placeholder-img card-img-top" alt="Image-manquante-2-svg" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    }
+
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+
+                                        <small class="text-muted text-right">Date of Investigation: @investigation.DateOfCreation</small>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <strong>Description of Investigation :</strong> @investigation.Description<br />
+                                            <strong>Hazard Place :</strong> @investigation.Report.HazardLocation <br />
+                                            <strong>Description of Hazard :</strong> @investigation.Report.Description <br />
+                                            <strong>Date of the Hazard :</strong> @investigation.Report.HazardDate <br />
+                                            <strong>Description of Investigation :</strong> @investigation.Description <br />
+                                            <strong>Date of Action :</strong> @investigation.DateOfAction <br />
+                                            <strong>Status of Report :</strong> @investigation.Report.Status.StatusOfReport <br />
+                                            <strong>email of the Reporter :</strong> @investigation.Report.Reporter.Email <br />
+                                            <strong>mobile of the Reporter :</strong> @investigation.Report.Reporter.PhoneNumber <br />
+                                        </p>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+
+                                                <a class="btn btn-sm btn-outline-success"
+                                                   asp-action="EditInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@investigation.InvestigationId">
+                                                    <strong>Edit</strong>
+                                                </a>
+                                                <a class="btn btn-sm btn-outline-danger"
+                                                   asp-action="DeleteInvestigation" asp-controller="InvestigatorSpace" asp-route-id="@investigation.InvestigationId">
+                                                    <strong>Delete</strong>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+
+                    else
+                    {
+                        <section class="py-5 text-center container mt-5">
+                            <div class="row py-lg-5">
+                                <div class="col-lg-6 col-md-8 mx-auto">
+                                    <div class="card bg-dark text-white">
+                                        <div class="card-header fw-light">
+                                    You don't have investigations yet
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-3 fw-light">
+                                        Use the button below to create an investigation
+                                            </h5>
+                                            <a class="btn btn-warning" style="width:auto" asp-controller="InvestigatorSpace" asp-action="ChooseReport">
+                                        Create Investigation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    }
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

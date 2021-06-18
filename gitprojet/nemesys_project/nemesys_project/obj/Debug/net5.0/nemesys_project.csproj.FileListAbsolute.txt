@@ -360,3 +360,7 @@ C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\D
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\AccountParameter.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\ChangePassword.cshtml.g.cs
 C:\Users\benoi\Documents\GIT_nem\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\Parameters.cshtml.g.cs
+C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\AccountParameter.cshtml.g.cs
+C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\ChangePassword.cshtml.g.cs
+C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Account\Parameters.cshtml.g.cs
+C:\Users\alex_\Documents\GitHub\cis2055-nemesys\gitprojet\nemesys_project\nemesys_project\obj\Debug\net5.0\Razor\Views\Admin\ManageUsers.cshtml.g.cs

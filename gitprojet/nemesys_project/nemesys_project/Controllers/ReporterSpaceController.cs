@@ -133,9 +133,9 @@ namespace nemesys_project.Controllers
         [HttpGet]
         public async Task<IActionResult> ShowInvestigation(int id)
         {
-            var report = await reportRepository.Find(id);
-            var investigation = await investigationRepository.GetInvestigation(report.InvestigationRefId);
-           return View(investigation);
+            var a = await investigationRepository.GetInvestigation(id);
+
+            return View(a);
         }
         [HttpGet]
         public async Task<IActionResult> EditReport(int id)

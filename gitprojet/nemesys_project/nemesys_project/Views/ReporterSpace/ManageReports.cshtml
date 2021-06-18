@@ -5,66 +5,148 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ManageReports</h1>
-@if (Model.Any())
-{
-    <a class="btn btn-primary mb-3" style="width:auto" asp-action="AddReport"
-       asp-controller="ReporterSpace">Add New Report</a>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ManageReports</title>
 
-    foreach (var report in Model)
-    {
-        <div class="card mb-3">
-            <img class="card-img-top" src="@report.ImageUrl">
-            <div class="card">
-                Report Date @report.CreationDate Vote:@if (report.Vote != null)
-                {@report.Vote.Score}
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            width: 100%;
+            height: 225px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">My space & My reports</h1>
+                    <p class="lead text-muted">You are in your personal space.</p>
+                    <br />
+                    <p class="lead text-muted">This is where it happens if you want to <strong>view, edit, delete or add</strong> other reports.</p>
+                    <a class="btn btn-warning my-2 btn-lg w-100" style="width:auto" asp-action="AddReport"
+                       asp-controller="ReporterSpace">Add report</a>
+                </div>
             </div>
-            <div class="card-body">
-                Hazard Location : @report.HazardLocation <br />
-                Hazard Type : @report.HazardType <br />
-                Date of the Hazard : @report.HazardDate <br />
-                Description : @report.Description <br />
-                Status : @report.Status.StatusOfReport <br />
-                Status : @report.Reporter.Email <br />
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-primary"
-                   asp-action="EditReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
-                    Edit
-                </a>
-                @if (report.InvestigationRefId != null)
-                {
-                    <a class="btn btn-primary"
-                       asp-action="ShowInvestigation" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
-                        Show Investigation
-                    </a>
-                }
-                <a class="btn btn-danger"
-                   asp-action="DeleteReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
-                    Delete
-                </a>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    @if (Model.Any())
+                    {
+
+                        foreach (var report in Model)
+                        {
+
+                            <div class="col">
+                                <div class="card shadow-sm">
+
+                                    @if (report.ImageUrl != null)
+                                    {
+                                        <img src="@report.ImageUrl" class="bd-placeholder-img card-img-top" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    }
+
+                                    else
+                                    {
+                                        <img src="https://i.ibb.co/cxHpT46/Image-manquante-2-svg.jpg" class="bd-placeholder-img card-img-top" alt="Image-manquante-2-svg" role="img" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    }
+
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <small class="text-muted text-left">
+                                            Vote: @if (report.Vote != null)
+                                            {@report.Vote.Score}
+                                        </small>
+
+                                        <small class="text-muted text-right">@report.CreationDate</small>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <strong>Hazard Location :</strong> @report.HazardLocation <br />
+                                            <strong>Hazard Type :</strong> @report.HazardType <br />
+                                            <strong>Date of the Hazard :</strong> @report.HazardDate <br />
+                                            <strong>Description :</strong> @report.Description <br />
+                                            <strong>Status :</strong> @report.Status.StatusOfReport <br />
+                                            <strong> Reporter Email :</strong> @report.Reporter.Email <br />
+                                        </p>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+
+                                                <a class="btn btn-sm btn-outline-success"
+                                                   asp-action="EditReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
+                                                    <strong>Edit</strong>
+
+                                                </a>
+                                                <a class="btn btn-sm btn-outline-danger"
+                                                   asp-action="DeleteReport" asp-controller="ReporterSpace" asp-route-id="@report.ReportId">
+                                                    <strong>Delete</strong>
+                                                </a>
+
+                                            </div>
+
+                                            @if (report.InvestigationRefId != null)
+                                            {
+                                                <a class="btn btn-sm btn-info text-right"
+                                                   asp-action="ShowInvestigation" asp-controller="ReporterSpace" asp-route-id="@report.InvestigationRefId">
+                                                    Investigation
+                                                </a>
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
 
 
+                        }
 
+                    }
+
+
+                    else
+                    {
+                        <section class="py-5 text-center container mt-5">
+                            <div class="row py-lg-5">
+                                <div class="col-lg-6 col-md-8 mx-auto">
+                                    <div class="card bg-dark text-white">
+                                        <div class="card-header fw-light">
+                                            You don't have reports yet
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-3 fw-light">
+                                                Use the button below to create a report
+                                            </h5>
+                                            <a class="btn btn-warning" style="width:auto" asp-controller="ReporterSpace" asp-action="AddReport">
+                                                Create Report
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    }
+
+                </div>
             </div>
         </div>
-    }
 
-}
-else
-{
-    <div class="card">
-        <div class="card-header">
-            You have no reports yet
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to create a report
-            </h5>
-            <a class="btn btn-primary" style="width:auto" asp-controller="ReporterSpace" asp-action="AddReport">
-                Create Report
-            </a>
-        </div>
-    </div>
 
-}
+                </main>
+</body>
+</html>

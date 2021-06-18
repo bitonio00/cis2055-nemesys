@@ -19,7 +19,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark text-white p-3">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark text-white p-3">
             <div class="container-fluid">
 
                 @Html.ActionLink("Nemesys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand text-white" })
@@ -39,7 +39,9 @@
                         <ul class="nav me-auto mb-2 mb-md-0">
                             @if (signInManager.IsSignedIn(User))
                             {
-                                <li class="nav-item">@Html.ActionLink(" " + "LogOut " + User.Identity.Name, "LogOut", "Account", new { area = "" }, new { @class = "bi bi-power btn btn-outline-light me-2" })</li>
+                                <li class="nav-item">@Html.ActionLink(" " + "Settings" , "Parameters", "Account", new { area = "" }, new { @class = "bi bi-gear btn btn-outline-light me-2 " })</li>
+                                <li class="nav-item">@Html.ActionLink(" " + "LogOut " + User.Identity.Name, "LogOut", "Account", new { area = "" }, new { @class = "bi bi-power btn btn-outline-light me-2 " })</li>
+
                             }
                             else
                             {

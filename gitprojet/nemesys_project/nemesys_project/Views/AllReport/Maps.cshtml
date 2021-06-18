@@ -3,100 +3,132 @@
     ViewData["Title"] = "Maps";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if (Model.Any())
-{
-    int i = -1;
-    string lat = "lat";
-    string lng = "lng";
-    string hazardDate = "HazardDate";
-    string reporterEmail = "reporterEmail";
-    string status = "status";
-    string HazardLocation = "HazardLocation";
-    string Description = "Description";
-    string HazardType = "HazardType";
 
-    foreach (var report in Model)
-    {
-        i++;
-        var iString = i.ToString();
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.LatitudeLocation" id="@lat@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.LongitudeLocation" id="@lng@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.HazardDate" id="@hazardDate@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.Reporter.Email" id="@reporterEmail@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.Status.StatusOfReport" id="@status@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.HazardLocation" id="@HazardLocation@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.Description" id="@Description@iString" />
-        </div>
-        <div class="form-group row">
-            <input type="hidden" asp-for="@report.HazardType" id="@HazardType@iString" />
-        </div>
-    }
+<html lang="en">
+<head>
 
-}
-<style>
-    #map {
-        height: 800px;
-        width: 1400px;
-    }
-</style>
-<br />
-<div class="row">
-    <div id="map"> </div>
-    <script>
-        var map;
-        function initMap() {
-            var options = {
-                center: { lat: 46, lng: 2 },
-                zoom: 8
-            }
-            var map = new google.maps.Map(document.getElementById('map'), options);
-            for (var i = 0; i < 100; i++) {
-                var iString = i.toString();
-                var Lat = parseFloat(document.getElementById("lat" + iString).value.replace(",", "."));
-                var Lng = parseFloat(document.getElementById("lng" + iString).value.replace(",", "."));
-                var Status = document.getElementById("status" + iString).value;
-                var Email = document.getElementById("reporterEmail" + iString).value;
-                var HazardDate = document.getElementById("HazardDate" + iString).value;
-                var HazardLocation = document.getElementById("HazardLocation" + iString).value;
-                var Description = document.getElementById("Description" + iString).value;
-                var HazardType = document.getElementById("HazardType" + iString).value;
-                var contentS = "Hazard Location:" + HazardLocation + "\r\n" + "Hazard Date:" + HazardDate + "\r\n" + "Hazard Type:" + HazardType + "\r\n" + "Status of Report:" + Status + "\r\n" + "Reporter Email:" + Email + "\r\n" + "Report Description:" + Description;
-                addMarker(Lat, Lng, contentS);
-            }
+    <title>Map</title>
 
-            function addMarker(Lat, Lng, contentS) {
-                var marker = new google.maps.Marker({
-                    position: { lat: Lat, lng: Lng },
-                    map: map,
-                    //icon:props.iconImage
-                });
-
-
-                var infoWindow = new google.maps.InfoWindow({
-                    content: `<form> \
-                           <h4>${contentS}</h4> \
-                          </form>`
-                });
-
-                marker.addListener('click', function () {
-                    infoWindow.open(map, marker);
-                });
-
-            }
+    <style>
+        #map {
+            width: 100%;
+            height: 100%;
+            margin:auto;
+            background-color: grey;
+            
         }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwIWe9dzbs3yOMx89_XQ8BCb-rAUFjXx4&callback=initMap" async defer></script>
-</div>
+
+        .square {
+            height: 400px;
+            width: 98%;
+            margin: auto;
+            border-color: #ffc107 #212529;
+            border-image: none;
+            border-radius: 0 0 0 0;
+            border-style: solid;
+            border-width: 30px;          
+        }
+       
+    </style>
+
+</head>
+
+<body style="margin-top:30px" class="bg-light">
+    
+
+    @if (Model.Any())
+    {
+        int i = -1;
+        string lat = "lat";
+        string lng = "lng";
+        string hazardDate = "HazardDate";
+        string reporterEmail = "reporterEmail";
+        string status = "status";
+        string HazardLocation = "HazardLocation";
+        string Description = "Description";
+        string HazardType = "HazardType";
+
+        foreach (var report in Model)
+        {
+            i++;
+            var iString = i.ToString();
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.LatitudeLocation" id="@lat@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.LongitudeLocation" id="@lng@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.HazardDate" id="@hazardDate@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.Reporter.Email" id="@reporterEmail@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.Status.StatusOfReport" id="@status@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.HazardLocation" id="@HazardLocation@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.Description" id="@Description@iString" />
+            </div>
+            <div class="form-group row">
+                <input type="hidden" asp-for="@report.HazardType" id="@HazardType@iString" />
+            </div>
+        }
+
+    }
+    
+    <br/>
+
+    <div class="row  square">
+        <div id="map"> </div>
+        <script>
+            var map;
+            function initMap() {
+                var options = {
+                    center: { lat: 46, lng: 2 },
+                    zoom: 8
+                }
+                var map = new google.maps.Map(document.getElementById('map'), options);
+                for (var i = 0; i < 100; i++) {
+                    var iString = i.toString();
+                    var Lat = parseFloat(document.getElementById("lat" + iString).value.replace(",", "."));
+                    var Lng = parseFloat(document.getElementById("lng" + iString).value.replace(",", "."));
+                    var Status = document.getElementById("status" + iString).value;
+                    var Email = document.getElementById("reporterEmail" + iString).value;
+                    var HazardDate = document.getElementById("HazardDate" + iString).value;
+                    var HazardLocation = document.getElementById("HazardLocation" + iString).value;
+                    var Description = document.getElementById("Description" + iString).value;
+                    var HazardType = document.getElementById("HazardType" + iString).value;
+                    var contentS = "Hazard Location:" + HazardLocation + "\r\n" + "Hazard Date:" + HazardDate + "\r\n" + "Hazard Type:" + HazardType + "\r\n" + "Status of Report:" + Status + "\r\n" + "Reporter Email:" + Email + "\r\n" + "Report Description:" + Description;
+                    addMarker(Lat, Lng, contentS);
+                }
+
+                function addMarker(Lat, Lng, contentS) {
+                    var marker = new google.maps.Marker({
+                        position: { lat: Lat, lng: Lng },
+                        map: map,
+                        //icon:props.iconImage
+                    });
+
+
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: `<form> \
+                                   <h4>${contentS}</h4> \
+                                  </form>`
+                    });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+
+                }
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwIWe9dzbs3yOMx89_XQ8BCb-rAUFjXx4&callback=initMap" async defer></script>
+    </div>
+
+</body>
+</html>

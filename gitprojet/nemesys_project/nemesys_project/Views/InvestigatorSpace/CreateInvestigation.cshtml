@@ -4,38 +4,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>CreateInvestigation</h1>
+<html lang="en">
+<head>
 
-<h4>Report</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateInvestigation">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CreateInvestigations</title>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/register.css" rel="stylesheet" />
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <main>
+            <div class="py-5 text-center">
+                <h1 class="fw-light">Create Investigation</h1>
+                <p class="lead text-muted">You can create an investigation using the form below.</p>
+                <br />
+                <a class="btn btn-lg btn-outline-warning" href="/InvestigatorSpace/ChooseReport"><strong>Cancel</strong></a>
             </div>
-            <div class="form-group">
-                <label asp-for="DateOfAction" class="control-label"></label>
-                <input asp-for="DateOfAction" class="form-control" />
-                <span asp-validation-for="DateOfAction" class="text-danger"></span>
+
+            <div class="row g-5">
+                <!--Cadre de gauche-->
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3 fw-light"><strong>Investigation information</strong></h4>
+                    <hr class="my-2">
+
+                    <form asp-action="CreateInvestigation">
+                        <div class="row g-3">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-12 form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <input asp-for="Description" class="form-control" placeholder="blablabla" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 form-group">
+                                <label asp-for="DateOfAction" class="control-label"></label>
+                                <input asp-for="DateOfAction" class="form-control" />
+                                <span asp-validation-for="DateOfAction" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 form-group">
+                                Select a Status
+                                <select asp-for="StatusId" class="form-control" name="StatusId">
+                                    <option value="2">closed</option>
+                                    <option value="3">no action required</option>
+                                    <option value="4">being investigated</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <input type="hidden" asp-for="ReportId" />
+                            </div>
+
+                            <hr class="my-3">
+
+                            <div class="col-12 form-group">
+                                <input type="submit" value="Create" class="w-100 btn btn-dark btn-lg" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                Select a Status
-                <select asp-for="StatusId" class="form-control" name="StatusId">
-                    <option value="2">closed</option>
-                    <option value="3">no action required</option>
-                    <option value="4">being investigated</option>
-                </select>
-            </div>
-            <div class="form-group row">
-                <input type="hidden" asp-for="ReportId" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        </main>
+        </div>
+</body>
+</html>
